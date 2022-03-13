@@ -1,0 +1,140 @@
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+	max-width: 1300px;
+}
+
+.categories-dropdown-wrap ul li {
+	margin: 0 0px 15px 0;
+}
+
+.pagination-area .page-item:last-child .page-link {
+	line-height: 36px;
+}
+.pagination-area .page-item:first-child .page-link {
+	line-height: 36px;
+}
+
+.product-cart-wrap .product-card-bottom {
+	display: inherit;
+	margin-top: 15px;
+}
+
+.product-cart-wrap .product-content-wrap .product-price {
+	padding-top: 5px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.product-cart-wrap .product-card-bottom .add-cart {
+	cursor: pointer;
+	width: 100%;
+}
+
+.product-cart-wrap .product-card-bottom .add-cart .add {
+	display: block;
+	text-align: center;
+}
+
+.banner-left-icon {
+	padding: 15px 10px;
+}
+
+.banner-left-icon .banner-text h3 {
+	font-size: 16px;
+}
+
+.banner-left-icon .banner-text p {
+	font-size: 14px;
+}
+
+.banner-left-icon .banner-icon {
+	max-width: 50px;
+	margin-right: 10px;
+}
+
+.user.justify-content-between.d-flex {
+	width: 100%;
+}
+
+.comments-area .comment-list .user.d-flex {
+	width: 100%;
+}
+
+.comments-area .thumb.text-center {
+	width: 15%;
+}
+
+.comments-area  .desc {
+	width: 85%;
+}
+
+.comments-area {
+	padding-bottom: 0;
+}
+
+.comment-form {
+	padding-top: 0;
+}
+
+.review_form:hover{
+	color: #fff;
+	background: #3BB77E;
+}
+
+.main_search_button:hover{
+		background-color: transparent !important;
+}
+
+button.submit:hover, button[type="submit"]:hover {
+	/* background-color: transparent !important; */
+}
+
+/* =============show search result=============  */
+.search-style-2 {
+    width: 100%;
+    position: relative;
+}
+div#suggestProduct {
+    position: absolute;
+    z-index: 9;
+    width: 98%;
+    left: 0;
+}
+
+div#suggestProduct ul{
+	background: #FFF;
+	box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 20%);
+	width: 99%;
+	max-height: 383px;
+	overflow-y: auto;
+	margin: auto;
+}
+
+li.design-li {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid;
+}
+
+/* li.design-li:last-child {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	border-bottom: 0px solid;
+} */
+
+
+
+
+/* .dropdown-item:last-child {
+	background: #162025;
+	display: flex;
+	align-items: center;
+	color: #fff;
+} */
