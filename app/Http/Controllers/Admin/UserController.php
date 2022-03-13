@@ -23,7 +23,7 @@ class UserController extends Controller
     */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = User::where('id','!=',Auth::user()->id)->orderBy('id','DESC')->paginate(5);
         return view('admin.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -50,15 +50,22 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
+            'phone' => 'required|unique:users,phone',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
         // insert data in database
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $user = User::create($input);
+        $password = Hash::make($input['password']);
+        $user = User::create([
+          'name' => $request->name,
+          'phone' => $request->phone,
+          'email' => $request->email,
+          'password' => $password,
+        ]);
         $user->assignRole($request->input('roles'));
-        return redirect()->route('users.index')->with('success','User created successfully');
+        Session::flash('store_success','value');
+        return redirect()->back();
     }
 
     /**
@@ -104,16 +111,17 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
+            'phone' => 'required|unique:users,phone,'.$id,
             'roles' => 'required'
         ]);
         // update data in database
         $input = $request->all();
-
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->assignRole($request->input('roles'));
-        return redirect()->route('users.index')->with('success','User updated successfully');
+        Session::flash('edit_success','value');
+        return redirect()->route('users.index');
 
     }
 
@@ -124,10 +132,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
     */
 
-    public function destroy($id)
+    public function delete($id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')->with('success','User deleted successfully');
+        Session::flash('delete_success','value');
+        return redirect()->route('users.index');
     }
 
 }

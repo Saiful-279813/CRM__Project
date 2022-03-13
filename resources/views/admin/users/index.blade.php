@@ -1,21 +1,48 @@
-@extends('layouts.backend_master')
+@extends('layouts.admin')
 @section('content')
   {{-- breadcrumb --}}
-  <div class="row bread_part">
-      <div class="col-sm-12 bread_col">
-          <h4 class="pull-left page-title bread_title">Dashboard</h4>
-          <ol class="breadcrumb pull-right">
-              <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-              <li class="active">User Part</li>
-
-          </ol>
+  <div class="row">
+      <div class="col-12">
+          <div class="page-title-box d-flex align-items-center justify-content-between">
+              <h4 class="mb-0 font-size-18">Management User</h4>
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                      <li class="breadcrumb-item active">Management User</li>
+                  </ol>
+              </div>
+          </div>
       </div>
   </div>
-  {{-- breadcrumb --}}
+  {{-- response massege --}}
+  <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+          @if(Session::has('edit_success'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Update User.
+            </div>
+          @endif
+
+          @if(Session::has('delete_success'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Delete User.
+            </div>
+          @endif
+
+          @if(Session::has('error'))
+            <div class="alert alert-warning alerterror" role="alert">
+               <strong>Opps!</strong> please try again.
+            </div>
+          @endif
+      </div>
+      <div class="col-md-2"></div>
+  </div>
+
   <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header custom-card-header">
                 <div class="row">
                     <div class="col-md-8">
                         <h3 class="card-title card_top_title"><i class="fab fa-gg-circle mr-2"></i>All User</h3>
@@ -27,19 +54,6 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                      {{-- error throgh --}}
-                      @if ($message = Session::get('success'))
-                      <div class="alert alert-success" role="alert">
-                        <p>{{ $message }}</p>
-                      </div>
-                      @endif
-                      {{-- error throgh --}}
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
@@ -70,9 +84,7 @@
                                      <td>
                                         {{-- <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}"><i class="fas fa-eye"></i></a> --}}
                                         <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}"><i class="fas fa-edit"></i></a>
-                                         {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                         {!! Form::close() !!}
+                                        <a class="btn btn-danger btn-sm" id="delete" href="{{ route('users.delete',$user->id) }}"><i class="fas fa-trash-alt"></i></a>
                                      </td>
                                    </tr>
                                    @endforeach
@@ -85,5 +97,6 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
+  {{-- do work --}}
 @endsection

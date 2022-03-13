@@ -1,43 +1,46 @@
-@extends('layouts.backend_master')
+@extends('layouts.admin')
 @section('content')
-
-<div class="row bread_part">
-    <div class="col-sm-12 bread_col">
-        <h4 class="pull-left page-title bread_title">Profile</h4>
-        <ol class="breadcrumb pull-right">
-            <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="active">Profile</li>
-        </ol>
-    </div>
-</div>
-
-{{-- response massage --}}
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        @if(Session::has('user_info_update'))
-          <div class="alert alert-success alertsuccess" role="alert">
-             <strong>Successfully!</strong> Update User Information.
+  {{-- breadcrumb --}}
+  <div class="row">
+      <div class="col-12">
+          <div class="page-title-box d-flex align-items-center justify-content-between">
+              <h4 class="mb-0 font-size-18">Management User</h4>
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                      <li class="breadcrumb-item active">Management User</li>
+                  </ol>
+              </div>
           </div>
-        @endif
+      </div>
+  </div>
+  {{-- response massage --}}
+  <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+          @if(Session::has('user_info_update'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Update User Information.
+            </div>
+          @endif
 
-        @if(Session::has('success__image__upload'))
-          <div class="alert alert-success alertsuccess" role="alert">
-             <strong>Successfully!</strong> Update User Image.
-          </div>
-        @endif
+          @if(Session::has('success__image__upload'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Update User Image.
+            </div>
+          @endif
 
-        @if(Session::has('error'))
-          <div class="alert alert-warning alerterror" role="alert">
-             <strong>Opps!</strong> please try again.
-          </div>
-        @endif
-    </div>
-    <div class="col-md-2"></div>
-</div>
-{{-- response massage --}}
+          @if(Session::has('error'))
+            <div class="alert alert-warning alerterror" role="alert">
+               <strong>Opps!</strong> please try again.
+            </div>
+          @endif
+      </div>
+      <div class="col-md-2"></div>
+  </div>
+  {{-- response massage --}}
 
-<div class="row">
+  <div class="row">
     {{-- form part --}}
     <div class="col-lg-3">
       {{-- do work --}}
@@ -230,9 +233,6 @@
       </div>
     </div>
     {{-- form part --}}
-</div>
-@endsection
-{{-- form validation activation --}}
-@section('scripts')
-
+   </div>
+  {{-- do work --}}
 @endsection

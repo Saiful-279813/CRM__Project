@@ -1,0 +1,26 @@
+/* +++++++++++++++++++++ */
+#sidebar-menu ul li a i {
+
+}
+
+#sidebar-menu ul li a i.child_i {
+    min-width: 0;
+    font-size: 13px;
+}
+
+#sidebar-menu ul li ul.sub-menu li a {
+	padding-left: 30px;
+}
+
+.page-title-box {
+	padding-bottom: 10px;
+}
+
+.custom-card-header{
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.control-label{
+  text-align: right;
+}

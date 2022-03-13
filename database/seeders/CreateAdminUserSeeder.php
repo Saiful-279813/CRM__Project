@@ -16,8 +16,9 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => 'Sowaq eCommarce',
+            'name' => 'Saiful Islam',
             'email' => 'admin@gmail.com',
+            'phone' => '01730233598',
             'password' => bcrypt('12345678'),
             'position' => 1,
         ]);
