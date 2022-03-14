@@ -4,13 +4,17 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li><a href="{{ route('admin.dashboard') }}" class="waves-effect"><i class="bx bx-home-circle"></i><span>Dashboard</span></a></li>
 
-                <li class="@yield('user')"><a href="#" class="waves-effect"><i class="bx bx-cog"></i><span>Administrator</span></a>
+                <li class="@yield('admin')"><a href="#" class="waves-effect"><i class="bx bx-cog"></i><span>Administrator</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('userChild')" href="{{ route('users.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Users </a></li>
+                        {{-- role --}}
+                        <li><a class="@yield('role')" href="{{ route('roles.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Role </a></li>
                     </ul>
                 </li>
 
                 {{-- do work --}}
+                <li class="@yield('customer')"><a class="@yield('customer_child')" href="{{ route('customers.index') }}" class="waves-effect"><i class="bx bx-user-pin"></i><span>Customers</span></a></li>
+
 
                 {{-- <li><a href="#" class="waves-effect"><i class="bx bx-package"></i><span>Finance & Accounting</span></a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -42,8 +46,7 @@
                     </ul>
                 </li> --}}
 
-                {{-- do work --}}
-                <li><a href="{{url('dashboard/customer')}}" class="waves-effect"><i class="bx bx-user-pin"></i><span>Customers</span></a></li>
+
                 <li><a href="{{url('dashboard/supplier')}}" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Suppliers</span></a></li>
                 <li><a href="{{url('dashboard/recycle')}}" class="waves-effect"><i class="bx bx-trash"></i><span>Recycle</span></a></li>
                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="waves-effect"><i class="bx bx-power-off"></i><span>Logout</span></a></li>

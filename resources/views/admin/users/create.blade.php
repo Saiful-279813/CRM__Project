@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('user') active mm-active @endsection
+@section('admin') active mm-active @endsection
 @section('userChild') active @endsection
 @section('content')
   {{-- breadcrumb --}}

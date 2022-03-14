@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +34,18 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
 
     // --------------- Role & Permission ------------------
     Route::resource('roles', RoleController::class);
+    Route::get('roles/delete/{id}', [UserController::class, 'delete'])->name('roles.delete');
     Route::resource('users', UserController::class);
     Route::get('users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
     // --------------- Role & Permission ------------------
+
+    // --------------- Customers ------------------
+    Route::resource('customers', CustomerController::class);
+    Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    // --------------- Customers ------------------
+
+
+
 });
 
 
