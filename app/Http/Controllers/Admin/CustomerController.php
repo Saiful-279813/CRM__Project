@@ -8,32 +8,29 @@ use App\Models\Customer;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /*+++++++++++++++++++++++++++*/
+    // DATABASE OPERATION
+    /*+++++++++++++++++++++++++++*/
+    public function getAll(){
+      return $data = Customer::orderBy('id','DESC')->get();
+    }
+
+
+
+    /*+++++++++++++++++++++++++++*/
+    // BLADE OPERATION
+    /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        //
+        $customers = $this->getAll();
+        return view('admin.customer.index',compact('customers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('admin.customer.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -79,7 +76,7 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
     }

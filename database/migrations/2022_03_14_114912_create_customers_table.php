@@ -19,8 +19,10 @@ class CreateCustomersTable extends Migration
             $table->string('customer_father',50)->nullable();
             $table->string('customer_phone',20)->unique();
             $table->string('customer_email',50)->nullable();
+
             $table->text('customer_address')->nullable();
             $table->string('customer_photo',50)->nullable();
+
             $table->integer('total_cost');
             $table->integer('payment');
             $table->integer('due')->default(0);
