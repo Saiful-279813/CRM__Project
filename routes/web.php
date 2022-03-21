@@ -41,7 +41,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
 
     // --------------- Customers ------------------
     Route::resource('customers', CustomerController::class);
-    Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     // --------------- Customers ------------------
 
 

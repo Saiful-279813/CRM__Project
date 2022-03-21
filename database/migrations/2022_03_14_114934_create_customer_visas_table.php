@@ -16,8 +16,8 @@ class CreateCustomerVisasTable extends Migration
         Schema::create('customer_visas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->string('visa_number',60)->unique();
-            $table->string('passport_number',60)->unique();
+            $table->string('visa_number',60)->unique()->nullable();
+            $table->string('passport_number',60)->unique()->nullable();
             $table->date('from_date')->nullable();
             $table->date('to_date')->nullable();
             $table->string('visa_duration',20)->nullable();
