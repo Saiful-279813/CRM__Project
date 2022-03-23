@@ -48,11 +48,10 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-center">
             @if(Auth::user()->upload_photo_path == NULL)
-              <img src="{{ asset('contents/common') }}/logo/logo.png" alt="" style="width:100px; height:100px; border-radius: 50%; border:1px solid #333">
+              <img src="{{asset('uploads/avatar/avatar-black.png')}}" alt="" style="width:100px; height:100px; border-radius: 50%; border:1px solid #333">
             @else
               <img src="{{ asset(Auth::user()->upload_photo_path) }}" alt="" style="width:100px; height:100px; border-radius: 50%; border:1px solid #333">
             @endif
-
           </li>
           <li class="list-group-item">
             <a class="dropdown-item custom_dropdown-item" href="{{ route('admin.profile') }}"><i class="md fas fa-home mr-2"></i>Home</a>

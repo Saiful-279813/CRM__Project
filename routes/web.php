@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\EmployeeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +45,10 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     // --------------- Customers ------------------
 
-
+    // --------------- Employee ------------------
+    Route::resource('employee', EmployeeController::class);
+    Route::get('employee/delete/{id}', [EmployeeController::class, 'delete'])->name('employee.delete');
+    // --------------- Employee ------------------
 
 });
 

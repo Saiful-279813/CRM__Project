@@ -15,21 +15,18 @@
                 {{-- do work --}}
                 <li class="@yield('customer')"><a class="@yield('customer_child')" href="{{ route('customers.index') }}" class="waves-effect"><i class="bx bx-user-pin"></i><span>Customers</span></a></li>
 
-
-                {{-- <li><a href="#" class="waves-effect"><i class="bx bx-package"></i><span>Finance & Accounting</span></a>
+                <li class="@yield('employee')"><a href="#" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Employee</span></a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#">Balance Sheet</a></li>
-                        <li><a href="{{url('dashboard/summary')}}">Summary</a></li>
-                        <li><a href="{{url('dashboard/income')}}">Daily Income</a></li>
-                        <li><a href="{{url('dashboard/expense')}}">Daily Expense</a></li>
-                        <li><a href="{{url('dashboard/income/category')}}">Income Category</a></li>
-                        <li><a href="{{url('dashboard/expense/category')}}">Expense Category</a></li>
-                        <li><a href="#">Cash Flow</a></li>
-                        <li><a href="#">Payment</a></li>
-                        <li><a href="#">Loan</a></li>
-                        <li><a href="#">Chart of Accounts</a></li>
+                        <li><a class="@yield('addEmployee')" href="{{ route('employee.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Add New Employee </a></li>
+                        <li><a class="@yield('addEmployee')" href="{{ route('employee.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee List </a></li>
                     </ul>
                 </li>
+
+
+                {{--
+
+
+                <i class="bx bx-package"></i>
                 <li><a href="#" class="waves-effect"><i class="bx bx-briefcase-alt-2"></i><span>Human Resource</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{url('dashboard/employee')}}">Employee Information</a></li>
@@ -47,7 +44,7 @@
                 </li> --}}
 
 
-                <li><a href="{{url('dashboard/supplier')}}" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Suppliers</span></a></li>
+
                 <li><a href="{{url('dashboard/recycle')}}" class="waves-effect"><i class="bx bx-trash"></i><span>Recycle</span></a></li>
                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="waves-effect"><i class="bx bx-power-off"></i><span>Logout</span></a></li>
             </ul>

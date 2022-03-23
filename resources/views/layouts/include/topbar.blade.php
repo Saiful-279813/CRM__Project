@@ -2,21 +2,27 @@
     <div class="navbar-header">
         <div class="d-flex">
             <div class="navbar-brand-box">
-              <a href="{{url('dashboard')}}" class="logo logo-light">
-                <span class="logo-sm">
-                    <img src="{{asset('contents/admin')}}/assets/images/csl-icon-white.png" alt="" height="22">
+              <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
+                <span class="logo-sm logo_sm_customize_admin">
+                    <img src="{{asset('contents/admin')}}/assets/images/favicon.svg" alt="">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('contents/admin')}}/assets/images/csl-logo.png" alt="" height="19">
+                    <img src="{{asset('contents/admin')}}/assets/images/logo.png" alt="" style="width:100px; height:40px">
                 </span>
               </a>
             </div>
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
+            <form class="app-search d-none d-lg-block" style="margin-right:30px">
+                <div class="position-relative">
+                    <input type="text" class="form-control" placeholder="Employee Search Here...">
+                    <span class="bx bx-search-alt"></span>
+                </div>
+            </form>
             <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
+                    <input type="text" class="form-control" placeholder="Customer Search Here...">
                     <span class="bx bx-search-alt"></span>
                 </div>
             </form>
@@ -39,6 +45,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
             <div class="dropdown d-none d-lg-inline-block ml-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -90,7 +97,11 @@
             </div>
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{asset('contents/admin')}}/assets/images/users/avatar-black.png" alt="Header Avatar">
+                    @if(Auth::user()->upload_photo_path != NULL)
+                      <img class="rounded-circle header-profile-user" src="{{asset(Auth::user()->upload_photo_path)}}" alt="Header Avatar">
+                    @else
+                      <img class="rounded-circle header-profile-user" src="{{asset('uploads/avatar/avatar-black.png')}}" alt="Header Avatar">
+                    @endif
                     <span class="d-none d-xl-inline-block ml-1" key="t-henry">{{Auth::user()->name}}</span><i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">

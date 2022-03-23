@@ -43,7 +43,7 @@
                   </div>
                   <div class="col-lg-2 d-none d-lg-block">
                       <div class="clearfix  mt-3 text-right">
-                          <a href="{{url('dashboard/account')}}" class="btn btn-dark btn-md waves-effect btn-label waves-light card_btn"><i class="fas fa-passport label-icon"></i>Profile</a>
+                          <a href="{{ route('admin.profile') }}" class="btn btn-dark btn-md waves-effect btn-label waves-light card_btn"><i class="fas fa-passport label-icon"></i>Profile</a>
                       </div>
                   </div>
               </div>

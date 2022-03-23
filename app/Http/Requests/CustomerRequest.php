@@ -13,7 +13,7 @@ class CustomerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_name' => 'required',
+          'customer_name' => 'required|min:3|max:50',
+          'customer_father' => 'required|min:3|max:50',
+          'customer_phone' => 'required|unique:customers,customer_phone',
+          'customer_email' => 'required|unique:customers,customer_email',
+          'visa_number' => 'required|unique:customers,visa_number',
+          'passport_number' => 'required|unique:customers,passport_number',
+          'customer_address' => 'required',
+          'total_cost' => 'required|numeric',
+          'payment' => 'required|numeric',
+          'due' => 'required|numeric',
+          'place_of_issue' => 'required',
+          'visa_type' => 'required',
+          'visa_name' => 'required',
+          'visa_remarks' => 'required',
+          'from_date' => 'required',
+          'to_date' => 'required',
+          'passport_image' => 'required',
+          'visa_image' => 'required',
+          'customer_photo' => 'required',
         ];
     }
 }

@@ -19,7 +19,7 @@
           <a href="#">
             <div class="avatar-md profile-user-wid mb-4">
               <span class="avatar-title rounded-circle bg-light">
-                  <img src="{{asset('contents/admin')}}/assets/images/csl-icon.png" alt="" class="rounded-circle" height="34">
+                  <img src="{{asset('contents/admin')}}/assets/images/favicon.svg" alt="" class="rounded-circle">
               </span>
             </div>
           </a>

@@ -7,7 +7,7 @@
         <meta content="Nishad" name="author" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>CRM :: Dashboard</title>
-        <link rel="shortcut icon" href="{{asset('contents/admin')}}/assets/images/csl-icon.png">
+        <link rel="shortcut icon" href="{{asset('contents/admin')}}/assets/images/favicon.svg">
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/bootstrap.min.css" id="bootstrap-style"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
