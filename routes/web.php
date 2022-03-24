@@ -5,6 +5,10 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\BloodGroupController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DesignationController;
+use App\Http\Controllers\Admin\EmployeeTypeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +53,28 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     Route::resource('employee', EmployeeController::class);
     Route::get('employee/delete/{id}', [EmployeeController::class, 'delete'])->name('employee.delete');
     // --------------- Employee ------------------
+
+    // --------------- Blood Group ------------------
+    Route::resource('blood', BloodGroupController::class);
+    // --------------- Blood Group ------------------
+
+    // --------------- Department ------------------
+    Route::resource('department', DepartmentController::class);
+    // --------------- Department ------------------
+
+    // --------------- Designation ------------------
+    Route::resource('designation', DesignationController::class);
+    // --------------- Designation ------------------
+
+    // --------------- EmployeeType ------------------
+    Route::resource('employee-type', EmployeeTypeController::class);
+    // --------------- EmployeeType ------------------
+
+
+
+
+
+
 
 });
 

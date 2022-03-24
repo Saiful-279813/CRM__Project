@@ -9,6 +9,15 @@
                         <li><a class="@yield('userChild')" href="{{ route('users.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Users </a></li>
                         {{-- role --}}
                         <li><a class="@yield('role')" href="{{ route('roles.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Role </a></li>
+                        {{-- Blood --}}
+                        <li><a class="@yield('blood')" href="{{ route('blood.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Blood Group </a></li>
+                        {{-- Department --}}
+                        <li><a class="@yield('department')" href="{{ route('department.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Department </a></li>
+                        {{-- Designation --}}
+                        <li><a class="@yield('designation')" href="{{ route('designation.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Designation </a></li>
+                        {{-- Employee Type --}}
+                        <li><a class="@yield('employee-type')" href="{{ route('employee-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Type </a></li>
+
                     </ul>
                 </li>
 

@@ -25,6 +25,19 @@ class CreateCustomersTable extends Migration
             $table->integer('total_cost');
             $table->integer('payment');
             $table->integer('due')->default(0);
+            // =========== New Include ===========
+            $table->boolean('vecxin')->default(0);
+            $table->boolean('PC')->default(0);
+            $table->boolean('medical')->default(0);
+            $table->date('madical_date')->nullable();
+            $table->enum('report',['FIT','UNFIT','PENDING'])->default('PENDING');
+            $table->boolean('visa_online')->default(0);
+            $table->boolean('visa_offline')->default(0);
+            $table->boolean('training')->default(0);
+            $table->boolean('manpower')->default(0);
+            $table->boolean('ticket')->default(0);
+            $table->unsignedBigInteger('employee_id')->comments('refference Officer');
+            // =========== New Include ===========
             // visa ===========
             $table->string('visa_number',60)->unique()->nullable();
             $table->string('passport_number',60)->unique()->nullable();

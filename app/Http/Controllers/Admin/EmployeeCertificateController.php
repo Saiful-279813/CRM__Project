@@ -4,43 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employee;
-use Carbon\Carbon;
-use Session;
-use Image;
-use Auth;
 
-class EmployeeController extends Controller
+class EmployeeCertificateController extends Controller
 {
-    /*+++++++++++++++++++++++++++*/
-    // DATABASE OPERATION
-    /*+++++++++++++++++++++++++++*/
-    public function getAll(){
-      return $data = Employee::orderBy('id','DESC')->get();
-    }
-
-    public function findCustomer($id){
-      return $data = Employee::where('id',$id)->first();
-    }
-
-    public function employeeId(){
-        $count = Customer::count();
-        return $id = 'E10'.$count;
-    }
-
-
-
-    /*+++++++++++++++++++++++++++*/
-    // BLADE OPERATION
-    /*+++++++++++++++++++++++++++*/
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         //
     }
 
-    public function create(){
-       $customerId = $this->employeeId;
-       return view('admin.employee.create',compact());
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
