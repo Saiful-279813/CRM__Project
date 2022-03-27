@@ -28,6 +28,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('addEmployee')" href="{{ route('employee.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Add New Employee </a></li>
                         <li><a class="@yield('addEmployee')" href="{{ route('employee.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee List </a></li>
+                        <li><a class="@yield('salary')" href="{{ route('salary.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Salary </a></li>
                     </ul>
                 </li>
 

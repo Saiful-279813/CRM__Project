@@ -14,7 +14,7 @@ class CreateCustomersTable extends Migration
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+            $table->id('customer_id');
             $table->string('customer_id_number',50)->unique()->nullable();
             $table->string('customer_name',50)->nullable();
             $table->string('customer_father',50)->nullable();
@@ -25,32 +25,7 @@ class CreateCustomersTable extends Migration
             $table->integer('total_cost');
             $table->integer('payment');
             $table->integer('due')->default(0);
-            // =========== New Include ===========
-            $table->boolean('vecxin')->default(0);
-            $table->boolean('PC')->default(0);
-            $table->boolean('medical')->default(0);
-            $table->date('madical_date')->nullable();
-            $table->enum('report',['FIT','UNFIT','PENDING'])->default('PENDING');
-            $table->boolean('visa_online')->default(0);
-            $table->boolean('visa_offline')->default(0);
-            $table->boolean('training')->default(0);
-            $table->boolean('manpower')->default(0);
-            $table->boolean('ticket')->default(0);
             $table->unsignedBigInteger('employee_id')->comments('refference Officer');
-            // =========== New Include ===========
-            // visa ===========
-            $table->string('visa_number',60)->unique()->nullable();
-            $table->string('passport_number',60)->unique()->nullable();
-            $table->date('from_date')->nullable();
-            $table->date('to_date')->nullable();
-            $table->string('visa_duration',20)->nullable();
-            $table->string('place_of_issue')->nullable();
-            $table->string('visa_type',60)->nullable();
-            $table->string('visa_name',60)->nullable();
-            $table->text('visa_remarks')->nullable();
-            $table->string('visa_image')->nullable();
-            $table->string('passport_image')->nullable();
-            // visa ===========
             $table->date('apply_date');
             $table->integer('customer_creator')->nullable();
             $table->string('customer_slug',50)->nullable();

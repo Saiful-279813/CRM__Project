@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BloodGroupController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DesignationController;
+use App\Http\Controllers\Admin\EmployeeTypeController;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\SalaryDetails;
 use Carbon\Carbon;
 use Session;
 use Image;
@@ -24,8 +29,28 @@ class EmployeeController extends Controller
     }
 
     public function employeeId(){
-        $count = Customer::count();
+        $count = Employee::count();
         return $id = 'E10'.$count;
+    }
+
+    public function bloodGroup(){
+      $bloodOBJ = new BloodGroupController();
+      return $bloodOBJ->getAll();
+    }
+
+    public function department(){
+      $departmentOBJ = new DepartmentController();
+      return $departmentOBJ->getAll();
+    }
+
+    public function designation(){
+      $designationOBJ = new DesignationController();
+      return $designationOBJ->getAll();
+    }
+
+    public function employeeType(){
+      $employeeType = new EmployeeTypeController();
+      return $employeeType->getAll();
     }
 
 
@@ -39,8 +64,13 @@ class EmployeeController extends Controller
     }
 
     public function create(){
-       $customerId = $this->employeeId;
-       return view('admin.employee.create',compact());
+       $employeeId = $this->employeeId();
+       $bloodGroup = $this->bloodGroup();
+       $department = $this->department();
+       $designation = $this->designation();
+       $employeeType = $this->employeeType();
+
+       return view('admin.employee.create',compact('employeeId','bloodGroup','department','designation','employeeType'));
     }
 
     /**
@@ -51,7 +81,68 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* =============== Form Validation =============== */
+        $request->validate([
+          'employee_name' => 'required|min:3|max:50',
+          'employee_father' => 'required|min:3|max:50',
+          'employee_mother' => 'required|min:3|max:50',
+          'mobile_no' => 'required|unique:employees,mobile_no',
+          'email' => 'required|unique:employees,email',
+          'nid' => 'required|unique:employees,nid',
+          'present_address' => 'required|max:250',
+          'parmanent_address' => 'required|max:250',
+          'date_of_birth' => 'required',
+          'maritus_status' => 'required',
+          'gender' => 'required',
+          'joining_date' => 'required',
+          'confirmation_date' => 'required',
+          'appointment_date' => 'required',
+          'designation_id' => 'required',
+          'department_id' => 'required',
+          'emp_type_id' => 'required',
+        ]);
+
+        /* ============= Insert data in database ============== */
+        $profile_photo = '';
+        if($request->file('profile_photo')){
+          /* ========= make Image ========= */
+          $image = $request->file('profile_photo');
+          $imageName = 'image'.'-'.$request->ID_Number.'-'.$image->getClientOriginalExtension();
+          Image::make($image)->resize(150,150)->save('uploads/employee/'.$imageName);
+          $profile_photo = 'uploads/employee/'.$imageName;
+        }
+        $insert = Employee::insertGetId([
+          'ID_Number' => $request->ID_Number,
+          'employee_name' => $request->employee_name,
+          'employee_father' => $request->employee_father,
+          'employee_mother' => $request->employee_mother,
+          'mobile_no' => $request->mobile_no,
+          'nid' => $request->nid,
+          'blood_group_id' => $request->blood_group_id,
+          'present_address' => $request->present_address,
+          'parmanent_address' => $request->parmanent_address,
+          'date_of_birth' => $request->date_of_birth,
+          'maritus_status' => $request->maritus_status,
+          'gender' => $request->gender,
+          'joining_date' => $request->joining_date,
+          'confirmation_date' => $request->confirmation_date,
+          'appointment_date' => $request->appointment_date,
+          'designation_id' => $request->designation_id,
+          'department_id' => $request->department_id,
+          'emp_type_id' => $request->emp_type_id,
+          'profile_photo' => $profile_photo,
+          'employee_slug' => strtolower(str_replace(' ','-',$request->employee_name)),
+          'employee_creator' => Auth::user()->id,
+          'created_at' => Carbon::now(),
+        ]);
+        /* ============ Insert visa ============ */
+        SalaryDetails::insert([
+          'employee_id' => $insert,
+          'created_at' => Carbon::now(),
+        ]);
+        /* ========= flash massege ========= */
+        Session::flash('success_store_first_step','value');
+        return redirect()->route('salary.edit',$insert);
     }
 
     /**

@@ -18,11 +18,11 @@ class CustomerController extends Controller
     // DATABASE OPERATION
     /*+++++++++++++++++++++++++++*/
     public function getAll(){
-      return $data = Customer::orderBy('id','DESC')->get();
+      return $data = Customer::orderBy('customer_id','DESC')->get();
     }
 
     public function findCustomer($id){
-      return $data = Customer::where('id',$id)->first();
+      return $data = Customer::where('customer_id',$id)->first();
     }
 
 
@@ -77,11 +77,11 @@ class CustomerController extends Controller
       if($request->file('customer_photo')){
         /* ========= make Image ========= */
         $image = $request->file('customer_photo');
-        $imageName = 'image'.'-'.$insert->id.'-'.$image->getClientOriginalExtension();
+        $imageName = 'image'.'-'.$insert->customer_id.'-'.$image->getClientOriginalExtension();
         Image::make($image)->resize(150,150)->save('uploads/customers/'.$imageName);
         $saveUrl = 'uploads/customers/'.$imageName;
 
-        Customer::where('id',$insert->id)->update([
+        Customer::where('customer_id',$insert->customer_id)->update([
           'customer_photo' => $saveUrl,
           'updated_at' => Carbon::now(),
         ]);
@@ -91,11 +91,11 @@ class CustomerController extends Controller
       if($request->file('visa_image')){
         /* ========= make Image ========= */
         $image = $request->file('visa_image');
-        $imageName = 'image'.'-'.$insert->id.'-'.$image->getClientOriginalExtension();
+        $imageName = 'image'.'-'.$insert->customer_id.'-'.$image->getClientOriginalExtension();
         Image::make($image)->save('uploads/customers/visa/'.$imageName);
         $saveUrl = 'uploads/customers/visa/'.$imageName;
 
-        Customer::where('id',$insert->id)->update([
+        Customer::where('customer_id',$insert->customer_id)->update([
           'visa_image' => $saveUrl,
           'updated_at' => Carbon::now(),
         ]);
@@ -105,11 +105,11 @@ class CustomerController extends Controller
       if($request->file('passport_image')){
         /* ========= make Image ========= */
         $image = $request->file('passport_image');
-        $imageName = 'image'.'-'.$insert->id.'-'.$image->getClientOriginalExtension();
+        $imageName = 'image'.'-'.$insert->customer_id.'-'.$image->getClientOriginalExtension();
         Image::make($image)->save('uploads/customers/passport/'.$imageName);
         $saveUrl = 'uploads/customers/passport/'.$imageName;
 
-        Customer::where('id',$insert->id)->update([
+        Customer::where('customer_id',$insert->customer_id)->update([
           'passport_image' => $saveUrl,
           'updated_at' => Carbon::now(),
         ]);
@@ -126,9 +126,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($customer_id)
     {
-        $data = $this->findCustomer($id);
+        $data = $this->findCustomer($customer_id);
         return view('admin.customer.view',compact('data'));
     }
 
@@ -138,9 +138,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($customer_id)
     {
-        $data = $this->findCustomer($id);
+        $data = $this->findCustomer($customer_id);
         return view('admin.customer.edit',compact('data'));
     }
 
@@ -178,7 +178,7 @@ class CustomerController extends Controller
         $data['customer_slug'] = strtolower(str_replace(' ','-',$request->customer_name));
         $data['customer_creator'] = Auth::user()->id;
         $data['visa_duration'] = $duration;
-        $findCustomer = Customer::where('id',$id)->first();
+        $findCustomer = Customer::where('customer_id',$id)->first();
         // dd($request->all());
 
         if($request->file('customer_photo')){
@@ -192,7 +192,7 @@ class CustomerController extends Controller
           $saveUrl = 'uploads/customers/'.$imageName;
           $data['customer_photo'] = $saveUrl;
 
-          $update = Customer::where('id',$id)->update($data);
+          $update = Customer::where('customer_id',$id)->update($data);
           /* ========= make Image ========= */
         }
 
@@ -223,7 +223,7 @@ class CustomerController extends Controller
           /* ========= make Image ========= */
         }
 
-        $update = Customer::where('id',$id)->update($data);
+        $update = Customer::where('customer_id',$id)->update($data);
 
         Session::flash('edit_success','value');
         return redirect()->route('customers.index');
@@ -237,7 +237,7 @@ class CustomerController extends Controller
      */
     public function delete($id)
     {
-        $findCustomer = Customer::where('id',$id)->first();
+        $findCustomer = Customer::where('customer_id',$id)->first();
         if($findCustomer->customer_photo != NULL){
           unlink($findCustomer->customer_photo);
         }

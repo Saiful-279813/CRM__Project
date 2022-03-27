@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BloodGroupController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\SalaryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,14 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- EmployeeType ------------------
     Route::resource('employee-type', EmployeeTypeController::class);
     // --------------- EmployeeType ------------------
+
+    // --------------- Employee ------------------
+    Route::resource('employee', EmployeeController::class);
+    // --------------- Employee ------------------
+
+    // --------------- Salary Details ------------------
+    Route::resource('salary', SalaryController::class);
+    // --------------- Salary Details ------------------
 
 
 

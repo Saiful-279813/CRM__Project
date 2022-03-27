@@ -14,10 +14,10 @@ class BloodSeeder extends Seeder
      */
     public function run()
     {
-        $insert = BloodGroup::create([ 'title' => 'AB+', 'remarks' => 'No Remarks' ]);
-        $insert = BloodGroup::create([ 'title' => 'AB-', 'remarks' => 'No Remarks' ]);
-        $insert = BloodGroup::create([ 'title' => 'O+', 'remarks' => 'No Remarks' ]);
-        $insert = BloodGroup::create([ 'title' => 'O-', 'remarks' => 'No Remarks' ]);
-        $insert = BloodGroup::create([ 'title' => 'B+', 'remarks' => 'No Remarks' ]);
+        $insert = BloodGroup::create([ 'name' => 'AB+', 'remarks' => 'No Remarks' ]);
+        $insert = BloodGroup::create([ 'name' => 'AB-', 'remarks' => 'No Remarks' ]);
+        $insert = BloodGroup::create([ 'name' => 'O+', 'remarks' => 'No Remarks' ]);
+        $insert = BloodGroup::create([ 'name' => 'O-', 'remarks' => 'No Remarks' ]);
+        $insert = BloodGroup::create([ 'name' => 'B+', 'remarks' => 'No Remarks' ]);
     }
 }

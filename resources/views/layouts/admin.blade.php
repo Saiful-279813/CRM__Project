@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/icons.min.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/app.min.css" id="app-style"/>
+        <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/select2.min.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/style.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/custom.css"/>
         @yield('styles')
@@ -58,6 +59,15 @@
         <!-- sweet alert -->
         <script src="{{asset('contents/admin')}}/assets/sweetalert/sweetalert.min.js"></script>
         <script src="{{asset('contents/admin')}}/assets/sweetalert/code.js"></script>
+        <script src="{{asset('contents/admin')}}/assets/js/select2.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#search_select').select2();
+            $('#search_select2').select2();
+            $('#search_select3').select2();
+            $('#search_select4').select2();
+          });
+        </script>
         <!-- form validation -->
         <script src="{{asset('contents/admin')}}/assets/js/parsley.min.js"></script>
         <script src="{{asset('contents/admin')}}/assets/js/app.js"></script>

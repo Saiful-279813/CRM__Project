@@ -84,9 +84,9 @@
                                      <td>{{ $data->customer_phone }}</td>
                                      <td>{{ $data->apply_date }}</td>
                                      <td style="width:17%">
-                                        <a class="btn btn-info btn-sm" href="{{ route('customers.show',$data->id) }}"><i class="fas fa-eye"></i></a>
-                                        <a class="btn btn-primary btn-sm" href="{{ route('customers.edit',$data->id) }}"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-danger btn-sm" id="delete" href="{{ route('customers.delete',$data->id) }}"><i class="fas fa-trash-alt"></i></a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('customers.show',$data->customer_id) }}"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-primary btn-sm" href="{{ route('customers.edit',$data->customer_id) }}"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-sm" id="delete" href="{{ route('customers.delete',$data->customer_id) }}"><i class="fas fa-trash-alt"></i></a>
                                         <a class="btn btn-success btn-sm" href="#"><i class="fas fa-download"></i></a>
                                      </td>
                                    </tr>

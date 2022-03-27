@@ -23,12 +23,16 @@ class CreateEmployeesTable extends Migration
             $table->string('email',50)->nullable();
             $table->string('nid',20)->nullable();
             $table->integer('blood_group_id')->nullable();
+
             $table->date('date_of_birth')->nullable();
+
             $table->string('present_address');
             $table->string('parmanent_address');
+
             $table->integer('designation_id')->nullable();
             $table->integer('department_id')->nullable();
             $table->integer('emp_type_id')->nullable();
+
             $table->boolean('maritus_status');
             $table->string('gender',10);
             $table->date('joining_date')->nullable();
@@ -39,9 +43,10 @@ class CreateEmployeesTable extends Migration
             $table->string('employee_appoint_latter',60)->nullable();
             /* ============= image collection ============= */
             $table->enum('job_status',['pending','approve','leave','reject'])->default('pending');
-            $table->date('entry_date')->nullable();
             $table->unsignedBigInteger('employee_creator');
             $table->string('employee_slug');
+            $table->string('_token')->nullable();
+            $table->string('_method')->nullable();
             $table->timestamps();
         });
     }
