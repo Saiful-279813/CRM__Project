@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\VisaTypeController;
+use App\Http\Controllers\Admin\CustomerVisaController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\BloodGroupController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -49,6 +51,14 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     Route::resource('customers', CustomerController::class);
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     // --------------- Customers ------------------
+
+    // --------------- Customer visa Type ------------------
+    Route::resource('visa-type', VisaTypeController::class);
+    // --------------- Customer visa Type ------------------
+
+    // --------------- Customer visa ------------------
+    Route::resource('customer-visa', CustomerVisaController::class);
+    // --------------- Customer visa ------------------
 
     // --------------- Employee ------------------
     Route::resource('employee', EmployeeController::class);

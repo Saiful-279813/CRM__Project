@@ -17,12 +17,21 @@
                         <li><a class="@yield('designation')" href="{{ route('designation.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Designation </a></li>
                         {{-- Employee Type --}}
                         <li><a class="@yield('employee-type')" href="{{ route('employee-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Type </a></li>
+                        {{-- Visa Type --}}
+                        <li><a class="@yield('visa-type')" href="{{ route('visa-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Visa Type </a></li>
 
                     </ul>
                 </li>
 
-                {{-- do work --}}
-                <li class="@yield('customer')"><a class="@yield('customer_child')" href="{{ route('customers.index') }}" class="waves-effect"><i class="bx bx-user-pin"></i><span>Customers</span></a></li>
+                <li class="@yield('customer')"><a href="#" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Customers</span></a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a class="@yield('addCustomer')" href="{{ route('customers.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Add Customer </a></li>
+                        {{-- list customer --}}
+                        <li><a class="@yield('customerList')" href="{{ route('customers.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Customer List </a></li>
+                        {{-- visa list --}}
+                        <li><a class="@yield('customerVisa')" href="{{ route('customer-visa.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Customer Visa </a></li>
+                    </ul>
+                </li>
 
                 <li class="@yield('employee')"><a href="#" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Employee</span></a>
                     <ul class="sub-menu" aria-expanded="false">

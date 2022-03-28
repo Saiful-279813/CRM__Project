@@ -25,13 +25,11 @@ class CreateCustomersTable extends Migration
             $table->integer('total_cost');
             $table->integer('payment');
             $table->integer('due')->default(0);
-            $table->unsignedBigInteger('employee_id')->comments('refference Officer');
+            $table->unsignedBigInteger('employee_id')->comments('refference Officer')->nullable();
             $table->date('apply_date');
             $table->integer('customer_creator')->nullable();
             $table->string('customer_slug',50)->nullable();
             $table->boolean('customer_status')->default(1);
-            $table->string('_token')->nullable();
-            $table->string('_method')->nullable();
             $table->timestamps();
         });
     }

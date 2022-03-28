@@ -4,36 +4,47 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SalaryDetails;
-use Carbon\Carbon;
+use App\Models\CustomerVisa;
 use Session;
+use Auth;
 
-class SalaryController extends Controller
+class CustomerVisaController extends Controller
 {
     /*+++++++++++++++++++++++++++*/
     // DATABASE OPERATION
     /*+++++++++++++++++++++++++++*/
     public function getAll(){
-      return $data = SalaryDetails::orderBy('sdetails_id','DESC')->get();
+      return $data = CustomerVisa::orderBy('customer_visa_id','DESC')->get();
+    }
+
+    public function getSomeAll(){
+        return $data = CustomerVisa::leftjoin('countries','customer_visas.place_country_id','=','countries.country_id')
+                               ->leftjoin('visa_types','customer_visas.visa_type_id','=','visa_types.visa_type_id')
+                               ->select(
+                                 'countries.name as countryName',
+                                 'visa_types.visa_type_name as visaTypeName',
+                                 /* Employee Table end */
+                                 'customer_visas.visa_number',
+                                 'customer_visas.passport_number',
+                                 'customer_visas.visa_duration',
+                                 'customer_visas.visa_name',
+                                 'customer_visas.visa_image',
+                                 'customer_visas.customer_visa_id',
+                                 'customer_visas.customer_id',
+                                 )->get();
     }
 
     public function findData($id){
-      return $data = SalaryDetails::where('sdetails_id',$id)->first();
-    }
-
-    public function totalEmployeeHistory(){
-      return $data = SalaryDetails::leftjoin('employees','salary_details.employee_id','=','employees.employee_id')
-                                    ->select('employees.employee_id','employees.ID_Number','employees.employee_name','salary_details.*')->get();
+      return $data = CustomerVisa::where('customer_visa_id',$id)->first();
     }
 
     /*+++++++++++++++++++++++++++*/
     // BLADE OPERATION
     /*+++++++++++++++++++++++++++*/
-
     public function index()
     {
-        $salary = $this->totalEmployeeHistory();
-        return view('admin.salary.index',compact('salary'));
+        $visa = $this->getSomeAll();
+        return view('admin.customer_visa.index',compact('visa'));
     }
 
     /**
@@ -68,16 +79,10 @@ class SalaryController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $data = $this->findData($id);
-        return view('admin.salary.edit',compact('data'));
+        return view('admin.customer_visa.edit',compact('data'));
     }
 
     /**

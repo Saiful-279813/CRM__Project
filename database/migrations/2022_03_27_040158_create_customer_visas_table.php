@@ -33,13 +33,16 @@ class CreateCustomerVisasTable extends Migration
             $table->string('passport_number',60)->unique()->nullable();
             $table->date('from_date')->nullable();
             $table->date('to_date')->nullable();
+
             $table->string('visa_duration',20)->nullable();
-            $table->string('place_of_issue')->nullable();
-            $table->string('visa_type',60)->nullable();
+
+            $table->unsignedBigInteger('place_country_id')->nullable();
+            $table->unsignedBigInteger('visa_type_id')->nullable();
             $table->string('visa_name',60)->nullable();
             $table->text('visa_remarks')->nullable();
             $table->string('visa_image')->nullable();
             $table->string('passport_image')->nullable();
+            $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');
             // visa ===========
             $table->timestamps();
         });

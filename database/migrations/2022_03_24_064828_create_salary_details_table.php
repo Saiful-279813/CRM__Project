@@ -24,6 +24,7 @@ class CreateSalaryDetailsTable extends Migration
             $table->integer('conveyance_allowance')->default(0);
             $table->integer('increment_no')->default(0);
             $table->float('increment_amount',11,2)->default(0);
+            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });
     }

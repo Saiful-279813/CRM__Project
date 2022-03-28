@@ -148,7 +148,7 @@
                 <div class="form-group custom_form_group">
                     <label class="control-label">Address:<span class="req_star">*</span></label>
                     <div class="">
-                        <textarea name="customer_address" rows="8" cols="80" class="form-control" placeholder="Address Here..." required data-parsley-pattern="[a-zA-Z0-9]+$" data-parsley-length="[10,255]"
+                        <textarea name="customer_address" rows="8" cols="80" class="form-control" placeholder="Address Here..." required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[10,255]"
                           data-parsley-trigger="keyup">{{ old('customer_address') }}</textarea>
                         @error('customer_address')
                         <span class="text-danger">{{ $message }}</span>
@@ -157,13 +157,30 @@
                 </div>
 
                 <div class="row">
+                  <div class="form-group col-md-6 m-auto mb-3">
+                    <label class="col-form-label col_form_label">Refference Officer:</label>
+                    <div class="">
+                        <select class="form-control search_select" name="employee_id" id="search_select2" required>
+                          <option value="">Select Officer</option>
+                          @foreach ($employee as $data)
+                            <option value="{{ $data->employee_id }}">{{ $data->employee_name }}</option>
+                          @endforeach
+                        </select>
+                        @error('payment')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row">
                   <div class="form-group col-md-4 m-auto mb-3">
                     <label class="col-form-label col_form_label">Photo:</label>
                     <div class="">
                       <div class="input-group">
                           <span class="input-group-btn">
                               <span class="btn btn-default btn-file btnu_browse">
-                                  Browse… <input type="file" name="pic" id="imgInp">
+                                  Browse… <input type="file" name="customer_photo" id="imgInp">
                               </span>
                           </span>
                           <input type="text" class="form-control" readonly>

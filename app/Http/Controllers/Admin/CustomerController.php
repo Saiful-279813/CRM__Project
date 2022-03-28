@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\CustomerVisa;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -25,22 +27,37 @@ class CustomerController extends Controller
       return $data = Customer::where('customer_id',$id)->first();
     }
 
+    public function getSome(){
+      return $data = Customer::orderBy('customer_id','DESC')->select(
+        'customer_id',
+        'customer_id_number',
+        'customer_name',
+        'customer_phone',
+        'apply_date',
+        'customer_photo',
+        )->get();
+    }
 
+    public function getEmployee(){
+      $employee = new EmployeeController();
+      return $employee->getTwo();
+    }
 
     /*+++++++++++++++++++++++++++*/
     // BLADE OPERATION
     /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        $customers = $this->getAll();
+        $customers = $this->getSome();
         return view('admin.customer.index',compact('customers'));
     }
 
     public function create()
     {
+        $employee = $this->getEmployee();
         $lastId = Customer::count();
         $customerIdNo = '10'.$lastId;
-        return view('admin.customer.create',compact('lastId','customerIdNo'));
+        return view('admin.customer.create',compact('lastId','customerIdNo','employee'));
     }
 
     public function store(Request $request){
@@ -49,75 +66,51 @@ class CustomerController extends Controller
         'customer_name' => 'required|min:3|max:50',
         'customer_father' => 'required|min:3|max:50',
         'customer_phone' => 'required|unique:customers,customer_phone',
-        'visa_number' => 'required|unique:customers,visa_number',
-        'passport_number' => 'required|unique:customers,passport_number',
         'customer_address' => 'required',
         'total_cost' => 'required',
         'payment' => 'required',
         'due' => 'required',
-        'place_of_issue' => 'required',
-        'visa_type' => 'required',
-        'visa_name' => 'required',
-        'visa_remarks' => 'required',
-        'from_date' => 'required',
-        'to_date' => 'required',
-        'passport_image' => 'required',
-        'visa_image' => 'required',
-        'customer_photo' => 'required',
+        'apply_date' => 'required',
+        'employee_id' => 'required',
       ]);
 
-      $duration = Carbon::parse( $request->from_date )->diffInDays( $request->to_date );
+      // $duration = Carbon::parse( $request->from_date )->diffInDays( $request->to_date );
+      // $data['visa_duration'] = $duration;
 
-      $data =  $request->all();
-      $data['customer_slug'] = strtolower(str_replace(' ','-',$request->customer_name));
-      $data['customer_creator'] = Auth::user()->id;
-      $data['visa_duration'] = $duration;
-      $insert = Customer::create($data);
-
+      $customer_photo = '';
       if($request->file('customer_photo')){
         /* ========= make Image ========= */
         $image = $request->file('customer_photo');
-        $imageName = 'image'.'-'.$insert->customer_id.'-'.$image->getClientOriginalExtension();
+        $imageName = 'image'.'-'.$request->customer_id_number.'-'.$image->getClientOriginalExtension();
         Image::make($image)->resize(150,150)->save('uploads/customers/'.$imageName);
-        $saveUrl = 'uploads/customers/'.$imageName;
-
-        Customer::where('customer_id',$insert->customer_id)->update([
-          'customer_photo' => $saveUrl,
-          'updated_at' => Carbon::now(),
-        ]);
+        $customer_photo = 'uploads/customers/'.$imageName;
         /* ========= make Image ========= */
       }
-
-      if($request->file('visa_image')){
-        /* ========= make Image ========= */
-        $image = $request->file('visa_image');
-        $imageName = 'image'.'-'.$insert->customer_id.'-'.$image->getClientOriginalExtension();
-        Image::make($image)->save('uploads/customers/visa/'.$imageName);
-        $saveUrl = 'uploads/customers/visa/'.$imageName;
-
-        Customer::where('customer_id',$insert->customer_id)->update([
-          'visa_image' => $saveUrl,
-          'updated_at' => Carbon::now(),
-        ]);
-        /* ========= make Image ========= */
-      }
-
-      if($request->file('passport_image')){
-        /* ========= make Image ========= */
-        $image = $request->file('passport_image');
-        $imageName = 'image'.'-'.$insert->customer_id.'-'.$image->getClientOriginalExtension();
-        Image::make($image)->save('uploads/customers/passport/'.$imageName);
-        $saveUrl = 'uploads/customers/passport/'.$imageName;
-
-        Customer::where('customer_id',$insert->customer_id)->update([
-          'passport_image' => $saveUrl,
-          'updated_at' => Carbon::now(),
-        ]);
-        /* ========= make Image ========= */
-      }
-
-      Session::flash('success_store','value');
-      return redirect()->back();
+      $insert = Customer::insertGetId([
+        'customer_id_number' => $request->customer_id_number,
+        'customer_name' => $request->customer_name,
+        'customer_father' => $request->customer_father,
+        'customer_phone' => $request->customer_phone,
+        'customer_email' => $request->customer_email,
+        'customer_address' => $request->customer_address,
+        'customer_photo' => $customer_photo,
+        'total_cost' => $request->total_cost,
+        'payment' => $request->payment,
+        'due' => $request->due,
+        'employee_id' => $request->employee_id,
+        'apply_date' => $request->apply_date,
+        'customer_creator' => Auth::user()->id,
+        'customer_slug' => strtolower(str_replace(' ','-',$request->customer_name)),
+        'created_at' => Carbon::now(),
+      ]);
+      /* ============ Insert visa ============ */
+      CustomerVisa::insert([
+        'customer_id' => $insert,
+        'created_at' => Carbon::now(),
+      ]);
+      /* ========= flash massege ========= */
+      Session::flash('success_store_first_step','value');
+      return redirect()->route('customer-visa.edit',$insert);
     }
 
     /**

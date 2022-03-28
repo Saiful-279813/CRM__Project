@@ -21,11 +21,15 @@ class EmployeeController extends Controller
     // DATABASE OPERATION
     /*+++++++++++++++++++++++++++*/
     public function getAll(){
-      return $data = Employee::orderBy('id','DESC')->get();
+      return $data = Employee::orderBy('employee_id','DESC')->get();
+    }
+
+    public function getTwo(){
+      return $data = Employee::orderBy('employee_id','DESC')->select('employee_id','employee_name')->get();
     }
 
     public function findCustomer($id){
-      return $data = Employee::where('id',$id)->first();
+      return $data = Employee::where('employee_id',$id)->first();
     }
 
     public function employeeId(){
@@ -53,6 +57,22 @@ class EmployeeController extends Controller
       return $employeeType->getAll();
     }
 
+    public function employeeInformation(){
+      return $data = Employee::leftjoin('employee_types','employees.emp_type_id','=','employee_types.emp_type_id')
+                             ->leftjoin('employee_departments','employees.department_id','=','employee_departments.department_id')
+                             ->leftjoin('employee_designations','employees.designation_id','=','employee_designations.designation_id')
+                             ->select(
+                               'employees.employee_id',
+                               'employees.ID_Number',
+                               'employees.employee_name',
+                               'employees.job_status',
+                               /* Employee Table end */
+                               'employee_types.title as typeTitle',
+                               'employee_departments.title as departmentTitle',
+                               'employee_designations.title as designationTitle',
+                               )->get();
+    }
+
 
 
     /*+++++++++++++++++++++++++++*/
@@ -60,7 +80,8 @@ class EmployeeController extends Controller
     /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        //
+        $employees = $this->employeeInformation();
+        return view('admin.employee.index',compact('employees'));
     }
 
     public function create(){
