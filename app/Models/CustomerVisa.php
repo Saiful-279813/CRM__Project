@@ -9,6 +9,7 @@ class CustomerVisa extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $primaryKey = 'customer_visa_id';
 
     public function customer(){
       return $this->belongsTo(Customer::class, 'customer_id','customer_id');

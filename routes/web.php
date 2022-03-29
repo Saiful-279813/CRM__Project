@@ -58,6 +58,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
 
     // --------------- Customer visa ------------------
     Route::resource('customer-visa', CustomerVisaController::class);
+    Route::post('customer-visa/update/{customer_visa_id}', [CustomerVisaController::class, 'updated'])->name('customer-visa.updated');
     // --------------- Customer visa ------------------
 
     // --------------- Employee ------------------

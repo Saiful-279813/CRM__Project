@@ -17,31 +17,34 @@ class CreateCustomerVisasTable extends Migration
             $table->id('customer_visa_id');
             // =========== New Include ===========
             $table->unsignedBigInteger('customer_id');
-            $table->boolean('vecxin')->default(0);
-            $table->boolean('PC')->default(0);
-            $table->boolean('medical')->default(0);
-            $table->date('madical_date')->nullable();
-            $table->enum('report',['FIT','UNFIT','PENDING'])->default('PENDING');
-            $table->boolean('visa_online')->default(0);
-            $table->boolean('visa_offline')->default(0);
-            $table->boolean('training')->default(0);
-            $table->boolean('manpower')->default(0);
-            $table->boolean('ticket')->default(0);
+            $table->boolean('vecxin')->default(0); //done
+            $table->boolean('PC')->default(0); //done
+            $table->boolean('medical')->default(0); //done
+            $table->date('madical_date')->nullable(); //done
+            $table->string('report',12)->default('PENDING'); //done
+            $table->boolean('visa')->default(0); //done
+
+            $table->boolean('training')->default(0); //done
+
+
+            $table->boolean('manpower')->default(0); //done
+            $table->boolean('ticket')->default(0); //done
             // =========== New Include ===========
             // visa ===========
-            $table->string('visa_number',60)->unique()->nullable();
-            $table->string('passport_number',60)->unique()->nullable();
-            $table->date('from_date')->nullable();
-            $table->date('to_date')->nullable();
+            $table->string('visa_number',60)->unique(); //done
+            $table->string('passport_number',60)->unique(); //done
+            $table->date('from_date')->nullable(); //done
+            $table->date('to_date')->nullable(); //done
 
             $table->string('visa_duration',20)->nullable();
 
-            $table->unsignedBigInteger('place_country_id')->nullable();
-            $table->unsignedBigInteger('visa_type_id')->nullable();
-            $table->string('visa_name',60)->nullable();
-            $table->text('visa_remarks')->nullable();
-            $table->string('visa_image')->nullable();
-            $table->string('passport_image')->nullable();
+            $table->unsignedBigInteger('place_country_id')->nullable(); //done
+            $table->unsignedBigInteger('visa_type_id')->nullable(); //done
+            $table->string('visa_name',60)->nullable(); //done
+            $table->text('visa_remarks')->nullable(); //done
+
+            $table->string('visa_image')->nullable(); //done
+            $table->string('passport_image')->nullable(); //done
             $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');
             // visa ===========
             $table->timestamps();

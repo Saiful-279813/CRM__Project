@@ -106,6 +106,8 @@ class CustomerController extends Controller
       /* ============ Insert visa ============ */
       CustomerVisa::insert([
         'customer_id' => $insert,
+        'visa_number' => 0,
+        'passport_number' => 0,
         'created_at' => Carbon::now(),
       ]);
       /* ========= flash massege ========= */
