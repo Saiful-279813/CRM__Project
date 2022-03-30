@@ -174,7 +174,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**

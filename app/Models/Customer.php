@@ -9,16 +9,17 @@ class Customer extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
-    public function user(){
-      return $this->belongsTo('App\Models\User','customer_creator','id');
-    }
+    protected $primaryKey = 'customer_id';
 
     public function employee(){
-      return $this->belongsTo(Employee::class,'employee_id','employee_id');
+      return $this->belongsTo(Employee::class);
     }
 
-    public function visa(){
-      return $this->hasOne(CustomerVisa::class, 'customer_id','customer_id');
+    public function customer_trnasaction(){
+      return $this->hasOne(CustomerTransactions::class);
+    }
+
+    public function customer_pay(){
+      return $this->hasMany(CustomerPayment::class);
     }
 }

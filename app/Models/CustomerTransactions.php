@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerVisa extends Model
+class CustomerTransactions extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $primaryKey = 'customer_visa_id';
+    protected $primaryKey = 'cust_trans_id';
 
     public function customer(){
-      return $this->belongsTo(Customer::class, 'customer_id','customer_id');
+      return $this->belongsTo(Customer::class);
     }
+
 }
