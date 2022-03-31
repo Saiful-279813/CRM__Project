@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\VisaTypeController;
-use App\Http\Controllers\Admin\CustomerVisaController;
+use App\Http\Controllers\Admin\CustomerTransactionController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\BloodGroupController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -49,17 +49,15 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
 
     // --------------- Customers ------------------
     Route::resource('customers', CustomerController::class);
+    Route::get('customer/list-download', [CustomerController::class, 'customerListDownload'])->name('customer-list-download');
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     // --------------- Customers ------------------
 
     // --------------- Customer visa Type ------------------
-    Route::resource('visa-type', VisaTypeController::class);
+    Route::resource('customer-trnasaction', CustomerTransactionController::class);
+    Route::get('customer-payment/{id}', [CustomerTransactionController::class, 'payment'])->name('customer-payment');
     // --------------- Customer visa Type ------------------
 
-    // --------------- Customer visa ------------------
-    Route::resource('customer-visa', CustomerVisaController::class);
-    Route::post('customer-visa/update/{customer_visa_id}', [CustomerVisaController::class, 'updated'])->name('customer-visa.updated');
-    // --------------- Customer visa ------------------
 
     // --------------- Employee ------------------
     Route::resource('employee', EmployeeController::class);

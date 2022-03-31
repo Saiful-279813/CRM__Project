@@ -100,6 +100,11 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer card_footer">
+              <div class="btn-group mt-2" role="group">
+                  <a href="{{ route('customer-list-download') }}" class="btn btn-primary"><i class="fas fa-download"></i> Print Or Download</a>
+              </div>
+            </div>
         </div>
     </div>
   </div>

@@ -106,35 +106,14 @@
 
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Total Cost:<span class="req_star">*</span></label>
+                      <label class="control-label">Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount" class="form-control" name="total_cost" value="{{old('total_cost')}}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[1,15]" data-parsley-trigger="keyup">
-                          @error('total_cost')
-                          <span class="text-danger">{{ $message }}</span>
-                          @enderror
+                          <input type="text" class="form-control" placeholder="Address Here..." name="customer_address" value="{{ old('customer_address') }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[10,255]"
+                            data-parsley-trigger="keyup">
                       </div>
-                  </div>
-
-                  <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Payment:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="text" placeholder="Amount" class="form-control" name="payment" value="{{old('payment')}}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[1,15]" data-parsley-trigger="keyup">
-                          @error('payment')
-                          <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                      </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Due:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="text" placeholder="Amount" class="form-control" name="due" value="{{old('due')}}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[1,15]" data-parsley-trigger="keyup">
-                          @error('due')
-                          <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                      </div>
+                      @error('customer_address')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                   </div>
 
                   <div class="form-group custom_form_group col-md-6">
@@ -144,18 +123,6 @@
                       </div>
                   </div>
                 </div>
-
-                <div class="form-group custom_form_group">
-                    <label class="control-label">Address:<span class="req_star">*</span></label>
-                    <div class="">
-                        <textarea name="customer_address" rows="8" cols="80" class="form-control" placeholder="Address Here..." required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[10,255]"
-                          data-parsley-trigger="keyup">{{ old('customer_address') }}</textarea>
-                        @error('customer_address')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
                 <div class="row">
                   <div class="form-group col-md-6 m-auto mb-3">
                     <label class="col-form-label col_form_label">Refference Officer:</label>
@@ -173,22 +140,312 @@
 
                   </div>
                 </div>
+                <hr>
+                {{-- visa information --}}
                 <div class="row">
-                  <div class="form-group col-md-4 m-auto mb-3">
-                    <label class="col-form-label col_form_label">Photo:</label>
-                    <div class="">
-                      <div class="input-group">
-                          <span class="input-group-btn">
-                              <span class="btn btn-default btn-file btnu_browse">
-                                  Browse… <input type="file" name="customer_photo" id="imgInp">
-                              </span>
-                          </span>
-                          <input type="text" class="form-control" readonly>
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Place Of Country:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="place_country_id" id="search_select" required>
+                            <option value="">Select Country</option>
+                            @foreach ($country as $ctry)
+                              <option value="{{ $ctry->country_id }}" {{ $data->place_country_id == $ctry->country_id ? 'selected' : '' }}>{{ $ctry->name }}</option>
+                            @endforeach
+                          </select>
+                          @error('place_country_id')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
                       </div>
-                      <img id="img-upload"/>
-                    </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Visa Type:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="visa_type_id" id="search_select3" required>
+                            <option value="">Select Visa Type</option>
+                            @foreach ($visaType as $vsType)
+                              <option value="{{ $vsType->visa_type_id }}" {{ $vsType->visa_type_id == $data->visa_type_id ? 'selected' : '' }}>{{ $vsType->visa_type_name }}</option>
+                            @endforeach
+                          </select>
+                          @error('visa_type_id')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6">
+                      <label class=" control-label">Visa Name:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Visa Name" class="form-control" name="visa_name" value="{{old('visa_name')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[1,200]" data-parsley-trigger="keyup">
+                          @error('visa_name')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-6">
+                      <label class=" control-label">Visa Remarks:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Remarks..." class="form-control" name="visa_remarks" value="{{old('visa_remarks')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          @error('visa_remarks')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6">
+                      <label class=" control-label">From Date:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="date" class="form-control" name="from_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') ?? old('from_date')}}" required>
+                          @error('from_date')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-6">
+                      <label class=" control-label">To Date:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="date" class="form-control" name="to_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') ?? old('to_date')}}" required>
+                          @error('to_date')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Visa Number:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Visa Number" class="form-control" name="visa_number" value="{{old('visa_number')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          @error('visa_number')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Passport Number:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Passport Number" class="form-control" name="passport_number" value="{{old('passport_number')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          @error('passport_number')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Passport Location:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="PP Location" class="form-control" name="pp_location" value="{{old('pp_location')}}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          @error('pp_location')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Vecxin:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="vecxin" required>
+                            <option value="">Select Yes Or No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                          </select>
+
+                          @error('vecxin')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">PC:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="PC" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('PC')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Medical:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="medical" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('medical')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Medical Date:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="date" name="madical_date" class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                          @error('madical_date')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Report:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="report" required>
+                            <option value="">Select Status</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="FIT">FIT</option>
+                            <option value="UNFIT">UNFIT</option>
+                          </select>
+
+                          @error('report')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Visa Online:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="visa_online" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('visa_online')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Visa:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="visa" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('visa')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-3">
+                      <label class=" control-label">Training:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="training" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('training')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Manpower:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="manpower" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('manpower')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Ticket:<span class="req_star">*</span></label>
+                      <div class="">
+                          <select class="form-control" name="ticket" required>
+                              <option value="">Select Yes Or No</option>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                          </select>
+                          @error('ticket')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Work Name:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" class="form-control" placeholder="Work Name..." name="work" value="{{ old('work') }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          @error('work')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                {{-- visa information --}}
+                <hr>
+                {{-- Image --}}
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Customer Image:<span class="req_star">*</span></label>
+                      <div class="row">
+                          {{-- do work --}}
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file btnu_browse">
+                                        Browse… <input type="file" name="customer_photo" onchange="customer_photoUrl(this)">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                            <img src="" id="customer_photoShow" style="margin-top:10px">
+                          </div>
+                          {{-- do work --}}
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Visa Image:<span class="req_star">*</span></label>
+                      <div class="row">
+                          {{-- do work --}}
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file btnu_browse">
+                                        Browse… <input type="file" name="visa_image" onchange="visa_imageUrl(this)">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                            <img src="" id="visa_imageShow" style="margin-top:10px">
+                          </div>
+                          {{-- do work --}}
+                      </div>
+                  </div>
+                  <div class="form-group custom_form_group col-md-4">
+                      <label class=" control-label">Passport Image:<span class="req_star">*</span></label>
+                      <div class="row">
+                          {{-- do work --}}
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file btnu_browse">
+                                        Browse… <input type="file" name="passport_image" onchange="passport_imageUrl(this)">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                            <img src="" id="passport_imageShow" style="margin-top:10px">
+                          </div>
+                          {{-- do work --}}
+                      </div>
+                  </div>
+
+                </div>
+                {{-- Image --}}
             </div>
 
               <div class="card-footer card_footer_button text-center">
@@ -209,5 +466,48 @@
           $('#customerForm').parsley();
       });
       /* ================ do work ================ */
+    </script>
+
+    {{-- for image --}}
+    <script>
+      function customer_photoUrl(input){
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e){
+              $('#customer_photoShow').attr('src',e.target.result).width(150)
+                    .height(150);
+          };
+          reader.readAsDataURL(input.files[0]);
+
+
+        }
+      }
+      function visa_imageUrl(input){
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e){
+              $('#visa_imageShow').attr('src',e.target.result).width(150)
+                    .height(150);
+          };
+          reader.readAsDataURL(input.files[0]);
+
+
+        }
+      }
+      function passport_imageUrl(input){
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e){
+              $('#passport_imageShow').attr('src',e.target.result).width(150)
+                    .height(150);
+          };
+          reader.readAsDataURL(input.files[0]);
+
+
+        }
+      }
     </script>
 @endsection

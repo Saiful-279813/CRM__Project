@@ -18,7 +18,7 @@
                         {{-- Employee Type --}}
                         <li><a class="@yield('employee-type')" href="{{ route('employee-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Type </a></li>
                         {{-- Visa Type --}}
-                        <li><a class="@yield('visa-type')" href="{{ route('visa-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Visa Type </a></li>
+                        
 
                     </ul>
                 </li>
@@ -29,7 +29,7 @@
                         {{-- list customer --}}
                         <li><a class="@yield('customerList')" href="{{ route('customers.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Customer List </a></li>
                         {{-- visa list --}}
-                        <li><a class="@yield('customerVisa')" href="{{ route('customer-visa.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Customer Visa </a></li>
+                        <li><a class="@yield('customerTransaction')" href="{{ route('customer-trnasaction.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Customer Transaction </a></li>
                     </ul>
                 </li>
 

@@ -26,14 +26,17 @@ class CreateCustomersTable extends Migration
             $table->string('visa_number',60)->unique();
             $table->string('passport_number',60)->unique();
             $table->string('pp_location')->nullable();
+
             $table->boolean('vecxin')->default(0);
             $table->boolean('PC')->default(0);
             $table->boolean('medical')->default(0);
             $table->date('madical_date')->nullable();
+
             $table->string('report',12)->default('PENDING');
             $table->boolean('visa_online')->default(0);
             $table->boolean('visa')->default(0);
             $table->boolean('training')->default(0);
+            // done
             $table->boolean('manpower')->default(0);
             $table->boolean('ticket')->default(0);
             $table->string('work',100)->nullable();
@@ -57,6 +60,7 @@ class CreateCustomersTable extends Migration
 
             $table->unsignedBigInteger('place_country_id')->nullable();
             $table->unsignedBigInteger('visa_type_id')->nullable();
+            
             $table->unsignedBigInteger('employee_id')->comments('refference Officer')->nullable();
             $table->date('apply_date');
             $table->integer('customer_creator')->nullable();

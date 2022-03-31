@@ -6,9 +6,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Requests\CustomerRequest;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\VisaTypeController;
 use Illuminate\Http\Request;
 use App\Models\Customer;
-use App\Models\CustomerVisa;
+use App\Models\CustomerTransactions;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -25,6 +27,16 @@ class CustomerController extends Controller
 
     public function findCustomer($id){
       return $data = Customer::where('customer_id',$id)->first();
+    }
+
+    public function country(){
+      $countryOBJ = new CountryController();
+      return $country = $countryOBJ->getSomeAll();
+    }
+
+    public function visaType(){
+      $visaType = new VisaTypeController();
+      return $visaType = $visaType->getSomeAll();
     }
 
     public function getSome(){
@@ -57,35 +69,44 @@ class CustomerController extends Controller
         $employee = $this->getEmployee();
         $lastId = Customer::count();
         $customerIdNo = '10'.$lastId;
-        return view('admin.customer.create',compact('lastId','customerIdNo','employee'));
+        $country = $this->country();
+        $visaType = $this->visaType();
+        return view('admin.customer.create',compact('lastId','customerIdNo','employee','country','visaType'));
     }
 
     public function store(Request $request){
+
       /* =================== form validation =================== */
       $request->validate([
         'customer_name' => 'required|min:3|max:50',
         'customer_father' => 'required|min:3|max:50',
+        'visa_name' => 'required|min:3|max:50',
+        'visa_remarks' => 'required|min:3|max:250',
+        'pp_location' => 'required|min:3|max:250',
         'customer_phone' => 'required|unique:customers,customer_phone',
+        'visa_number' => 'required|unique:customers,visa_number',
+        'passport_number' => 'required|unique:customers,passport_number',
         'customer_address' => 'required',
-        'total_cost' => 'required',
-        'payment' => 'required',
-        'due' => 'required',
         'apply_date' => 'required',
         'employee_id' => 'required',
+        'place_country_id' => 'required',
+        'visa_type_id' => 'required',
+        'from_date' => 'required',
+        'to_date' => 'required',
+        'vecxin' => 'required',
+        'PC' => 'required',
+        'medical' => 'required',
+        'madical_date' => 'required',
+        'report' => 'required',
+        'visa_online' => 'required',
+        'visa' => 'required',
+        'training' => 'required',
+        'manpower' => 'required',
+        'ticket' => 'required',
+        'work' => 'required',
       ]);
 
-      // $duration = Carbon::parse( $request->from_date )->diffInDays( $request->to_date );
-      // $data['visa_duration'] = $duration;
-
-      $customer_photo = '';
-      if($request->file('customer_photo')){
-        /* ========= make Image ========= */
-        $image = $request->file('customer_photo');
-        $imageName = 'image'.'-'.$request->customer_id_number.'-'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(150,150)->save('uploads/customers/'.$imageName);
-        $customer_photo = 'uploads/customers/'.$imageName;
-        /* ========= make Image ========= */
-      }
+      /* ========== Insert Data In Database ========== */
       $insert = Customer::insertGetId([
         'customer_id_number' => $request->customer_id_number,
         'customer_name' => $request->customer_name,
@@ -93,59 +114,98 @@ class CustomerController extends Controller
         'customer_phone' => $request->customer_phone,
         'customer_email' => $request->customer_email,
         'customer_address' => $request->customer_address,
-        'customer_photo' => $customer_photo,
-        'total_cost' => $request->total_cost,
-        'payment' => $request->payment,
-        'due' => $request->due,
+        /* ========== Visa Information ========== */
+        'visa_name' => $request->visa_name,
+        'visa_remarks' => $request->visa_remarks,
+        'visa_number' => $request->visa_number,
+        'passport_number' => $request->passport_number,
+        'pp_location' => $request->pp_location,
+        'vecxin' => $request->vecxin,
+        'PC' => $request->PC,
+        'medical' => $request->medical,
+        'madical_date' => $request->madical_date,
+        'report' => $request->report,
+        'visa_online' => $request->visa_online,
+        'visa' => $request->visa,
+        'visa_duration' => Carbon::parse( $request->from_date )->diffInDays( $request->to_date ),
+        'training' => $request->training,
+        'manpower' => $request->manpower,
+        'ticket' => $request->ticket,
+        'work' => $request->work,
+        'from_date' => $request->from_date,
+        'to_date' => $request->to_date,
+        'place_country_id' => $request->place_country_id,
+        'visa_type_id' => $request->visa_type_id,
         'employee_id' => $request->employee_id,
+        /* ========== Visa Information ========== */
+
         'apply_date' => $request->apply_date,
         'customer_creator' => Auth::user()->id,
         'customer_slug' => strtolower(str_replace(' ','-',$request->customer_name)),
         'created_at' => Carbon::now(),
       ]);
+      /* ========== Insert Data In Database ========== */
+      if($request->file('customer_photo')){
+        /* ========= make Image ========= */
+        $image = $request->file('customer_photo');
+        $imageName = 'image'.'-'.$insert.'-'.$image->getClientOriginalExtension();
+        Image::make($image)->resize(150,150)->save('uploads/customers/'.$imageName);
+        $customer_photo = 'uploads/customers/'.$imageName;
+        /* ========= make Image ========= */
+        Customer::where('customer_id',$insert)->update([
+          'customer_photo' => $customer_photo,
+          'updated_at' => Carbon::now(),
+        ]);
+
+      }
+
+      if($request->file('visa_image')){
+        $image = $request->file('visa_image');
+        $imageName = 'visa'.'-'.$insert.'-'.$image->getClientOriginalExtension();
+        Image::make($image)->save('uploads/customers/visa/'.$imageName);
+        $visa_image = 'uploads/customers/visa/'.$imageName;
+        /* ========= make Image ========= */
+        Customer::where('customer_id',$insert)->update([
+          'visa_image' => $visa_image,
+          'updated_at' => Carbon::now(),
+        ]);
+      }
+
+      if($request->file('passport_image')){
+        $image = $request->file('passport_image');
+        $imageName = 'passport'.'-'.$insert.'-'.$image->getClientOriginalExtension();
+        Image::make($image)->save('uploads/customers/passport/'.$imageName);
+        $passport_image = 'uploads/customers/passport/'.$imageName;
+        /* ========= make Image ========= */
+        Customer::where('customer_id',$insert)->update([
+          'passport_image' => $passport_image,
+          'updated_at' => Carbon::now(),
+        ]);
+      }
+
       /* ============ Insert visa ============ */
-      CustomerVisa::insert([
+      CustomerTransactions::insert([
         'customer_id' => $insert,
-        'visa_number' => 0,
-        'passport_number' => 0,
         'created_at' => Carbon::now(),
       ]);
       /* ========= flash massege ========= */
+
       Session::flash('success_store_first_step','value');
-      return redirect()->route('customer-visa.edit',$insert);
+      return redirect()->route('customer-transaction.edit',$insert);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($customer_id)
     {
         $data = $this->findCustomer($customer_id);
         return view('admin.customer.view',compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($customer_id)
     {
         $data = $this->findCustomer($customer_id);
         return view('admin.customer.edit',compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         /* =================== form validation =================== */
@@ -224,12 +284,6 @@ class CustomerController extends Controller
         return redirect()->route('customers.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $findCustomer = Customer::where('customer_id',$id)->first();
@@ -246,4 +300,13 @@ class CustomerController extends Controller
         Session::flash('delete_success','value');
         return redirect()->route('customers.index');
     }
+
+    /* ===========  */
+    public function customerListDownload(){
+      $customer_list = Customer::leftjoin('customer_transactions','customers.customer_id','=','customer_transactions.customer_id')->get();
+      return view('admin.download.customer.list',compact('customer_list'));
+    }
+
+
+
 }

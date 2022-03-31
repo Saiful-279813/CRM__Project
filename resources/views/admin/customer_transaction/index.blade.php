@@ -4,11 +4,11 @@
   <div class="row">
       <div class="col-12">
           <div class="page-title-box d-flex align-items-center justify-content-between">
-              <h4 class="mb-0 font-size-18">Customer Visa</h4>
+              <h4 class="mb-0 font-size-18">Customer Transaction</h4>
               <div class="page-title-right">
                   <ol class="breadcrumb m-0">
                       <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                      <li class="breadcrumb-item active">Customer Visa</li>
+                      <li class="breadcrumb-item active">Customer Transaction</li>
                   </ol>
               </div>
           </div>
@@ -20,7 +20,7 @@
       <div class="col-md-8">
           @if(Session::has('edit_success'))
             <div class="alert alert-success alertsuccess" role="alert">
-               <strong>Successfully!</strong> Update Visa Information.
+               <strong>Successfully!</strong> Save & Change Customer Transaction.
             </div>
           @endif
 
@@ -39,7 +39,7 @@
             <div class="card-header custom-card-header">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3 class="card-title card_top_title"><i class="fab fa-gg-circle mr-2"></i>All Visa Information</h3>
+                        <h3 class="card-title card_top_title"><i class="fab fa-gg-circle mr-2"></i>All Customer Transaction </h3>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -52,28 +52,27 @@
                                 <thead>
                                     <tr>
                                       <th>No</th>
-                                      <th>Visa & Passport</th>
-                                      <th>Visa Duration</th>
-                                      <th>Place</th>
-                                      <th>Visa Name</th>
-                                      <th>Visa Image</th>
+                                      <th>Customer</th>
+                                      <th>Full Contact</th>
+                                      <th>Total Pay</th>
+                                      <th>Due To Admin</th>
+                                      <th>Total Cost</th>
                                       <th>Action</th>
                                     </tr>
                                 </thead>
                                 {{-- main work --}}
                                 <tbody>
-                                   @forelse ($visa as $data)
+                                   @forelse ($transaction as $data)
                                    <tr>
                                      <td> {{ $loop->iteration }} </td>
-                                     <td> {{ $data->visa_number }} <br> {{ $data->passport_number }} </td>
-                                     <td>{{ $data->visa_duration }}</td>
-                                     <td>{{ $data->countryName }}</td>
-                                     <td>{{ $data->visa_name }}</td>
-                                     <td>
-                                       <img src="{{ asset($data->visa_image) }}" alt="" width="150">
-                                     </td>
+                                     <td> {{ $data->customer_id_number }} <br> {{ $data->customer_name }} </td>
+                                     <td>{{ $data->full_contact }}</td>
+                                     <td>{{ $data->total_pay }}</td>
+                                     <td>{{ $data->due_to_admin }}</td>
+                                     <td>{{ $data->cost }}</td>
                                      <td style="width:17%">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('customer-visa.edit',$data->customer_visa_id) }}"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-primary btn-sm" href="{{ route('customer-trnasaction.edit',$data->cust_trans_id) }}"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{{ route('customer-payment',$data->cust_trans_id) }}"><i class="fab fa-amazon-pay"></i></a>
                                      </td>
                                    </tr>
                                   @empty

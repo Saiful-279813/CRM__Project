@@ -23,7 +23,7 @@ class CreateCustomerTransactionsTable extends Migration
             $table->integer('cost')->default(0);
             $table->integer('officer_commision')->default(0);
             $table->integer('agent_commision')->default(0);
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->timestamps();
         });
     }

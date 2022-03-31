@@ -1,0 +1,56 @@
+.cs-container {
+    max-width: 1200px;
+}
+
+.cs-invoice.cs-style1 {
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+td, th {
+    padding: 3px 5px;
+    line-height: 1.2em;
+}
+
+th span {
+    color: #333;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+td span {
+    font-size: 11px;
+}
+
+thead {
+    border: 1px solid #eee;
+}
+
+tbody {
+    border: 1px solid #eee;
+}
+
+tbody tr.first__row__tbody, tbody td{
+    border: 1px solid #eee;
+}
+
+/*tr.third__row__tbody {
+    border-bottom: 2px solid #333;
+}*/
+
+tr.bdr{
+    border-bottom: 2px solid #333;
+}
+
+td.heading__td__style{
+    padding: 0;
+}
+
+td.body__td__style{
+    padding: 0;
+}
+
+td{
+    width: 10%;
+}
