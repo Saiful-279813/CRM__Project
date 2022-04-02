@@ -60,14 +60,14 @@ class CreateCustomersTable extends Migration
 
             $table->unsignedBigInteger('place_country_id')->nullable();
             $table->unsignedBigInteger('visa_type_id')->nullable();
-            
+
             $table->unsignedBigInteger('employee_id')->comments('refference Officer')->nullable();
             $table->date('apply_date');
             $table->integer('customer_creator')->nullable();
             $table->string('customer_slug',50)->nullable();
             $table->boolean('customer_status')->default(1);
-
             $table->timestamps();
+            $table->string('_token')->nullable();
         });
     }
 

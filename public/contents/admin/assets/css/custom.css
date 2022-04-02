@@ -100,3 +100,8 @@
 	text-align: center;
 	position: relative;
 }
+
+.dropdown-menu {
+  text-align: center;
+	padding: 10px;
+}

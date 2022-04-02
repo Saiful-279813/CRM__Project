@@ -1,6 +1,4 @@
 @extends('layouts.admin')
-@section('customer') active mm-active @endsection
-@section('customer_child') active @endsection
 @section('content')
   {{-- breadcrumb --}}
   <div class="row">

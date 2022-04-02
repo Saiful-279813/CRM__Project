@@ -83,11 +83,26 @@
                                      <td>{{ $data->customer_name }}</td>
                                      <td>{{ $data->customer_phone }}</td>
                                      <td>{{ $data->apply_date }}</td>
-                                     <td style="width:17%">
-                                        <a class="btn btn-info btn-sm" href="{{ route('customers.show',$data->customer_id) }}"><i class="fas fa-eye"></i></a>
-                                        <a class="btn btn-primary btn-sm" href="{{ route('customers.edit',$data->customer_id) }}"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-danger btn-sm" id="delete" href="{{ route('customers.delete',$data->customer_id) }}"><i class="fas fa-trash-alt"></i></a>
-                                        <a class="btn btn-success btn-sm" href="#"><i class="fas fa-download"></i></a>
+                                     <td style="width:17%; text-align:center">
+                                       <div class="dropdown">
+                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                           <i class="fas fa-exclamation"></i>
+                                         </button>
+                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                           {{-- do action --}}
+                                           <div class="" style="margin-bottom:10px">
+                                             <a class="btn btn-primary btn-sm" href="{{ route('customers.edit',$data->customer_id) }}"><i class="fas fa-edit"></i></a>
+
+                                             <a class="btn btn-success btn-sm" href="{{ route('customers.show',$data->customer_id) }}"><i class="fas fa-eye"></i></a>
+
+                                              <a class="btn btn-danger btn-sm" href="#"><i class="fas fa-download"></i></a>
+                                           </div>
+                                           {{-- do action --}}
+                                         </div>
+                                        </div>
+
+
+
                                      </td>
                                    </tr>
                                   @empty

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -10,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="ThemeMarch">
   <!-- Site Title -->
-  <title>Train Invoice</title>
+  <title>Customer Information</title>
   <link rel="stylesheet" href="{{asset('contents/admin/invoice')}}/assets/css/style.css">
   <link rel="stylesheet" href="{{asset('contents/admin/invoice')}}/assets/css/custom.css">
 </head>
@@ -20,149 +18,101 @@
     <div class="cs-invoice cs-style1">
       <div class="cs-invoice_in" id="download_section">
 
-
-
           <table>
-                  <thead>
-                    <tr class="cs-focus_bg">
-                        <td class="heading__td__style" style="width: 100%;">
-                          <table border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr class="cs-focus_bg">
+                    <td class="heading__td__style" style="width: 100%;">
+                        <table border="0" cellspacing="0" cellpadding="0">
                             <tr class="first__row">
-                              <td> <span>PP Loc</span> </td>
-                              <td> <span>Name</span> </td>
-                              <td> <span>Pas</span> </td>
-                              <td> <span>Mob</span> </td>
-                              <td> <span>Vex</span> </td>
-                              <td> <span>PC</span> </td>
-                              <td> <span>Medi</span> </td>
-                              <td> <span>Rport</span> </td>
-                              <td> <span>V.online</span> </td>
+                                <td> <span>PP Loc</span> </td>
+                                <td> <span>Name</span> </td>
+                                <td> <span>Pas</span> </td>
+                                <td> <span>Mob</span> </td>
+                                <td> <span>Vex</span> </td>
+                                <td> <span>PC</span> </td>
+                                <td> <span>Medi</span> </td>
+                                <td> <span>Rport</span> </td>
+                                <td> <span>V.online</span> </td>
                             </tr>
                             <tr class="second__row">
 
-                              <td> <span>1st Pay</span> </td>
-                              <td> <span>Visa</span> </td>
-                              <td> <span>Trn</span> </td>
-                              <td> <span>Mpr</span> </td>
-                              <td> <span>Tic</span> </td>
-                              <td> <span>Rf.Ofc</span> </td>
-                              <td> <span>Wrk</span> </td>
-                              <td> <span>County</span> </td>
-                              <td> <span>F.Amt</span> </td>
+                                <td> <span>1st Pay</span> </td>
+                                <td> <span>Visa</span> </td>
+                                <td> <span>Trn</span> </td>
+                                <td> <span>Mpr</span> </td>
+                                <td> <span>Tic</span> </td>
+                                <td> <span>Rf.Ofc</span> </td>
+                                <td> <span>Wrk</span> </td>
+                                <td> <span>County</span> </td>
+                                <td> <span>F.Amt</span> </td>
 
 
                             </tr>
                             <tr>
-                              <td> <span>T.pay</span> </td>
-                              <td> <span>Due</span> </td>
-                              <td> <span>Pay To Me</span> </td>
-                              <td> <span>D.O.Pay-Details</span> </td>
-                              <td> <span>Cost</span> </td>
-                              <td> <span>Ofc.Com</span> </td>
-                              <td> <span>Ag.Com.Pay</span> </td>
-                              <td> <span>Date</span> </td>
+                                <td> <span>T.pay</span> </td>
+                                <td> <span>Due</span> </td>
+                                <td> <span>Pay To Me</span> </td>
+                                <td> <span>D.O.Pay-Details</span> </td>
+                                <td> <span>Cost</span> </td>
+                                <td> <span>Ofc.Com</span> </td>
+                                <td> <span>Ag.Com.Pay</span> </td>
+                                <td> <span>Date</span> </td>
                             </tr>
-                          </table>
-                        </td>
-                    </tr>
+                        </table>
+                    </td>
+                </tr>
 
-                  </thead>
-                  <tbody>
-
-                      <tr class="bdr">
-                        <td class="body__td__style">
-                          <table border="0" cellspacing="0" cellpadding="0">
+            </thead>
+            <tbody>
+              @foreach ($customer_list as $data)
+                <tr class="bdr">
+                    <td class="body__td__style">
+                        <table border="0" cellspacing="0" cellpadding="0">
                             <!-- do work -->
-                        <tr class="first__row__tbody">
-                          <td> <span>PP Loc</span> </td>
-                          <td> <span>Saiful Islam Munna</span> </td>
-                          <td> <span>23098490283</span> </td>
-                          <td> <span>01920611821</span> </td>
-                          <td> <span>Yes</span> </td>
-                          <td> <span>No</span> </td>
-                          <td> <span>Yes <br> 24/10/2002 </span> </td>
-                          <td> <span>Pending</span> </td>
-                          <td> <span>No</span> </td>
+                            <tr class="first__row__tbody">
+                                <td> <span>{{ $data->pp_location }}</span> </td>
+                                <td> <span>{{ $data->customer_name }}</span> </td>
+                                <td> <span>{{ $data->passport_number }}</span> </td>
+                                <td> <span>{{ $data->customer_phone }}</span> </td>
+                                <td> <span>{{ $data->vecxin == 1 ? 'Yes' : 'No' }}</span> </td>
+                                <td> <span>{{ $data->PC == 1 ? 'Yes' : 'No' }}</span> </td>
+                                <td> <span>{{ $data->medical == 1 ? 'Yes' : 'No' }} <br> {{ $data->medical_date }} </span> </td>
+                                <td> <span>{{ $data->report }}</span> </td>
+                                <td> <span>{{ $data->visa_online == 1 ? 'Yes' : 'No' }}</span> </td>
 
-                        </tr>
-                        <tr class="second__row__tbody">
+                            </tr>
+                            <tr class="second__row__tbody">
 
-                            <td> <span>Yes</span> </td>
-                            <td> <span>No</span> </td>
-                            <td> <span>Yes</span> </td>
-                            <td> <span>Yes</span> </td>
-                            <td> <span>Yes</span> </td>
-                            <td> <span>Abdur Rahman Gazi</span> </td>
-                            <td> <span>Hr.Driver</span> </td>
-                            <td> <span>Afganisthan</span> </td>
-                            <td> <span>12000000</span> </td>
+                                <td> <span>--</span> </td>
+                                <td> <span>{{ $data->visa == 1 ? 'Yes' : 'No' }}</span> </td>
+                                <td> <span>{{ $data->training == 1 ? 'Yes' : 'No' }}</span> </td>
+                                <td> <span>{{ $data->manpower == 1 ? 'Yes' : 'No' }}</span> </td>
+                                <td> <span>{{ $data->ticket == 1 ? 'Yes' : 'No' }}</span> </td>
+                                <td> <span>{{ $data->employee_name }}</span> </td>
+                                <td> <span>{{ $data->work }}</span> </td>
+                                <td> <span>{{ $data->name }}</span> </td>
+                                <td> <span>{{ $data->full_contact }}</span> </td>
 
-                        </tr>
-                        <tr class="third__row__tbody">
-                            <td> <span>20000000</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>D.O.Pay-Details</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>666</span> </td>
-                            <td> <span>Date</span> </td>
-                        </tr>
-                        <!-- do work -->
-
-
-                          </table>
-                        </td>
-                      </tr>
-
-                      <tr class="bdr">
-                        <td class="body__td__style">
-                          <table border="0" cellspacing="0" cellpadding="0">
+                            </tr>
+                            <tr class="third__row__tbody">
+                                <td> <span>{{ $data->total_pay }}</span> </td>
+                                <td> <span>{{ $data->due_to_admin }}</span> </td>
+                                <td> <span>{{ $data->payment_to_admin }}</span> </td>
+                                <td> <span>{{ $data->date }}</span> </td>
+                                <td> <span>{{ $data->cost }}</span> </td>
+                                <td> <span>{{ $data->officer_commision }}</span> </td>
+                                <td> <span>{{ $data->agent_commision }}</span> </td>
+                                <td> <span>--</span> </td>
+                            </tr>
                             <!-- do work -->
-                        <tr class="first__row__tbody">
-                          <td> <span>PP Loc</span> </td>
-                          <td> <span>Saiful Islam Munna</span> </td>
-                          <td> <span>23098490283</span> </td>
-                          <td> <span>01920611821</span> </td>
-                          <td> <span>Yes</span> </td>
-                          <td> <span>No</span> </td>
-                          <td> <span>Yes <br> 24/10/2002 </span> </td>
-                          <td> <span>Pending</span> </td>
-                          <td> <span>No</span> </td>
-
-                        </tr>
-                        <tr class="second__row__tbody">
-
-                            <td> <span>Yes</span> </td>
-                            <td> <span>No</span> </td>
-                            <td> <span>Yes</span> </td>
-                            <td> <span>Yes</span> </td>
-                            <td> <span>Yes</span> </td>
-                            <td> <span>Abdur Rahman Gazi</span> </td>
-                            <td> <span>Hr.Driver</span> </td>
-                            <td> <span>Afganisthan</span> </td>
-                            <td> <span>12000000</span> </td>
-
-                        </tr>
-                        <tr class="third__row__tbody">
-                            <td> <span>20000000</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>D.O.Pay-Details</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>20000000</span> </td>
-                            <td> <span>666</span> </td>
-                            <td> <span>Date</span> </td>
-                        </tr>
-                        <!-- do work -->
 
 
-                          </table>
-                        </td>
-                      </tr>
-
-                  </tbody>
-                </table>
+                        </table>
+                    </td>
+                </tr>
+              @endforeach
+            </tbody>
+        </table>
 
 
 

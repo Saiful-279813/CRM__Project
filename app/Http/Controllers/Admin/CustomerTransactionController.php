@@ -68,7 +68,17 @@ class CustomerTransactionController extends Controller
 
     /* ****** ========= Payment ========= ****** */
     public function payment($id){
-      return view('admin.customer_transaction.payment.index',compact('id'));
+      $transaction = CustomerTransactions::where('cust_trans_id',$id)->first();
+      return view('admin.customer_transaction.payment.index',compact('transaction'));
+    }
+
+    public function paymentSubmit(Request $request, $id){
+      /* ===================== Payment Submit ===================== */
+      dd($request->all());
+      $transaction = CustomerTransactions::where('cust_trans_id',$id)->update([
+
+      ]);
+      /* ===================== Payment Submit ===================== */
     }
 
 

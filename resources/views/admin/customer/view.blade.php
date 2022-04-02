@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('customer') active mm-active @endsection
-@section('customer_child') active @endsection
+@section('customerList') active @endsection
 @section('content')
   {{-- breadcrumb --}}
   <div class="row">
@@ -97,24 +97,39 @@
                         <td>{{$data->customer_address == NULL ? 'Not Assign' : $data->customer_address}}</td>
                       </tr>
                       <tr>
+                        <td>Full Contact</td>
+                        <td>:</td>
+                        <td>{{$data->full_contact}}</td>
+                      </tr>
+                      <tr>
+                        <td>Total Payment</td>
+                        <td>:</td>
+                        <td>{{$data->total_pay}}</td>
+                      </tr>
+                      <tr>
+                        <td>Total Due</td>
+                        <td>:</td>
+                        <td>{{$data->due_to_admin}}</td>
+                      </tr>
+                      <tr>
+                        <td>Pay To Admin</td>
+                        <td>:</td>
+                        <td>{{$data->payment_to_admin}}</td>
+                      </tr>
+                      <tr>
                         <td>Total Cost</td>
                         <td>:</td>
-                        <td>{{$data->total_cost}}</td>
+                        <td>{{$data->cost}}</td>
                       </tr>
                       <tr>
-                        <td>Payment</td>
+                        <td>Officer Commision</td>
                         <td>:</td>
-                        <td>{{$data->payment}}</td>
+                        <td>{{$data->officer_commision}}</td>
                       </tr>
                       <tr>
-                        <td>Due</td>
+                        <td>Agent Commision</td>
                         <td>:</td>
-                        <td>{{$data->due}}</td>
-                      </tr>
-                      <tr>
-                        <td>Visa Number</td>
-                        <td>:</td>
-                        <td>{{$data->visa_number}}</td>
+                        <td>{{$data->agent_commision}}</td>
                       </tr>
                       <tr>
                         <td>Passport Number</td>
@@ -139,12 +154,7 @@
                       <tr>
                         <td>Place Of Issue</td>
                         <td>:</td>
-                        <td>{{$data->place_of_issue}}</td>
-                      </tr>
-                      <tr>
-                        <td>Visa Type</td>
-                        <td>:</td>
-                        <td>{{$data->visa_type}}</td>
+                        <td>{{$data->name}}</td>
                       </tr>
                       <tr>
                         <td>Visa Name</td>
@@ -164,12 +174,50 @@
                         <td>{{$data->apply_date}}</td>
                       </tr>
                       <tr>
-                        <td>Customer Creator</td>
+                        <td>Refference Officer</td>
                         <td>:</td>
-                        <td>{{ $data->user->id == $data->customer_creator ? $data->user->name : 'Not Found!' }}</td>
+                        <td>{{$data->employee_name}}</td>
                       </tr>
 
                   </table>
+                  <hr>
+              </div>
+              <div class="col-md-10 m-auto">
+                <div class="row">
+                  <div class="col-md-2">
+                    <p> <strong>Vecxin:</strong> {{ $data->vecxin == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p> <strong>PC:</strong> {{ $data->PC == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p style="margin:0"> <strong>Medical:</strong> {{ $data->medical == 1 ? 'Yes' : 'No' }} </p>
+                    <p> <strong>Date:</strong> {{ $data->medical_date == NULL ? 'Not Assign' : $data->medical_date }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p> <strong>Report:</strong> {{ $data->report }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p> <strong>Visa Online:</strong> {{ $data->visa_online == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p> <strong>Visa:</strong> {{ $data->visa == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                </div>
+                {{-- second row --}}
+                <div class="row">
+                  <div class="col-md-2">
+                    <p> <strong>Training:</strong> {{ $data->training == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p> <strong>Manpower:</strong> {{ $data->manpower == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                  <div class="col-md-2">
+                    <p> <strong>Ticket:</strong> {{ $data->ticket == 1 ? 'Yes' : 'No' }} </p>
+                  </div>
+                    <p> <strong>PP Location:</strong> {{ $data->pp_location }} </p>
+                  </div>
+                </div>
               </div>
               {{-- do work --}}
             </div>

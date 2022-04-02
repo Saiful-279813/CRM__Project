@@ -78,9 +78,58 @@
                       </div>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6 m-auto">
-                      <label class="control-label">Total Payment:<span class="req_star">*</span></label>
+                      <label class="control-label">Officer Commission:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Amount..." class="form-control" id="officer_commision" name="officer_commision" value="{{ $data->officer_commision }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          @error('officer_commision')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Agent Commission:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Amount..." class="form-control" id="agent_commision" name="agent_commision" value="{{ $data->agent_commision }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          @error('agent_commision')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Total Costing:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Amount..." class="form-control" id="cost" name="cost" value="{{ $data->cost }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          @error('cost')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Payment To Admin:<span class="req_star">*</span></label>
+                      <div class="">
+                          <input type="text" placeholder="Amount..." class="form-control" name="full_contact" value="{{ $data->full_contact }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          @error('full_contact')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Payment:<span class="req_star">*</span></label>
                       <div class="">
                           <input type="text" placeholder="Amount..." class="form-control" name="total_pay" value="{{ $data->total_pay }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup" onkeyup="payment()">
                           @error('total_pay')
@@ -89,6 +138,7 @@
                       </div>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Total Due:<span class="req_star">*</span></label>
@@ -152,6 +202,21 @@
 
 
       }
-      /* ================ do work ================ */
+
+      $('#officer_commision').on('keyup', function(){
+        var agent = $("#agent_commision").val();
+        if(agent > 0){
+          $('#cost').val(agent);
+        }else{
+          $('#cost').val(0);
+        }
+
+      });
+
+      // $('#agent_commision').on('keyup', function(){
+      //   var officer = $("#officer_commision").val();
+      //   var total = parseInt($(this).val()) + parseInt(officer);
+      //   $('#cost').val(total);
+      // })
     </script>
 @endsection

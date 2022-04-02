@@ -48,7 +48,17 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- Role & Permission ------------------
 
     // --------------- Customers ------------------
-    Route::resource('customers', CustomerController::class);
+    Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('customer/create', [CustomerController::class, 'create'])->name('customers.create');
+    Route::get('customer/{customer_id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::get('customer/{customer_id}/show', [CustomerController::class, 'show'])->name('customers.show');
+    Route::post('customer/store', [CustomerController::class, 'store'])->name('customers.store');
+    Route::post('customer/update', [CustomerController::class, 'update'])->name('customers.update');
+    // =========== Photo ============
+    Route::post('customer-photo/{customer_id}/update', [CustomerController::class, 'updatePhoto'])->name('customer-photo');
+    Route::post('customer-visa-photo/{customer_id}/update', [CustomerController::class, 'updateVisaPhoto'])->name('customer-visa-image');
+    Route::post('customer-passport-photo/{customer_id}/update', [CustomerController::class, 'updatePassportPhoto'])->name('customer-passport-image');
+    // =========== Photo ============
     Route::get('customer/list-download', [CustomerController::class, 'customerListDownload'])->name('customer-list-download');
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     // --------------- Customers ------------------
@@ -56,6 +66,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- Customer visa Type ------------------
     Route::resource('customer-trnasaction', CustomerTransactionController::class);
     Route::get('customer-payment/{id}', [CustomerTransactionController::class, 'payment'])->name('customer-payment');
+    Route::post('customer/payment-process/{cust_trans_id}', [CustomerTransactionController::class, 'paymentSubmit'])->name('customer-payment-process');
     // --------------- Customer visa Type ------------------
 
 
