@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmployeeType;
+use Carbon\Carbon;
 use Session;
 
 class EmployeeTypeController extends Controller
@@ -25,8 +26,8 @@ class EmployeeTypeController extends Controller
     /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        $data = $this->getAll();
-        return view('admin.emptype.index',compact('data'));
+        $employeeType = $this->getAll();
+        return view('admin.emptype.index',compact('employeeType'));
     }
 
     public function create()
@@ -57,7 +58,7 @@ class EmployeeTypeController extends Controller
     {
         /* ========== Validation ========== */
         $request->validate([
-          'title' => 'required|unique:employee_types,title,'.$id
+          'title' => 'required'
         ]);
         /* ========== Insert Data in database ========== */
         $update = EmployeeType::where('emp_type_id',$id)->update([
@@ -66,6 +67,6 @@ class EmployeeTypeController extends Controller
           'updated_at' => Carbon::now(),
         ]);
         Session::flash('success_update','value');
-        return redirect()->back();
+        return redirect()->route('employee-type.index');
     }
 }

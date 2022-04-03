@@ -71,7 +71,7 @@
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Full Contact:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" name="full_contact" value="{{ $data->full_contact }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Amount..." class="form-control" onkeyup="fullContact()" name="full_contact" value="{{ $data->full_contact }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
                           @error('full_contact')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -83,10 +83,12 @@
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Officer Commission:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" id="officer_commision" name="officer_commision" value="{{ $data->officer_commision }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Amount..." class="form-control" onkeyup="officerCommision()" name="officer_commision" value="{{ $data->officer_commision }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
                           @error('officer_commision')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
+
+
                       </div>
                   </div>
                 </div>
@@ -95,7 +97,7 @@
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Agent Commission:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" id="agent_commision" name="agent_commision" value="{{ $data->agent_commision }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Amount..." onkeyup="agentCommision()" class="form-control" id="agent_commision" name="agent_commision" value="{{ $data->agent_commision }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
                           @error('agent_commision')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -110,6 +112,7 @@
                           @error('cost')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
+                          <input type="hidden" id="temporaryOfficerComision" value="">
                       </div>
                   </div>
                 </div>
@@ -118,8 +121,8 @@
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Payment To Admin:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" name="full_contact" value="{{ $data->full_contact }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
-                          @error('full_contact')
+                          <input type="text" placeholder="Amount..." onkeyup="paymentToAdmin()" class="form-control" name="payment_to_admin" value="{{ $data->payment_to_admin }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
+                          @error('payment_to_admin')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
                       </div>
@@ -131,7 +134,7 @@
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Payment:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" name="total_pay" value="{{ $data->total_pay }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup" onkeyup="payment()">
+                          <input type="text" placeholder="Amount..." onkeyup="paymentToNormal()" class="form-control" name="total_pay" value="{{ $data->total_pay }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup" onkeyup="payment()">
                           @error('total_pay')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -187,36 +190,109 @@
     {{-- calculation --}}
     <script type="text/javascript">
       /* ================ do work ================ */
-      function payment(){
-        let full_contact = $('input[name="full_contact"]').val();
-        let total_pay = $('input[name="total_pay"]').val();
-
-        if(total_pay != ''){
-          let result = (full_contact - total_pay);
-          $('input[name="due_to_admin"]').val(result);
-          $('input[name="due_to_admin_show"]').val(result);
+      function officerCommision(){
+        var officer_commision = parseFloat( $('input[name="officer_commision"]').val() );
+        if(officer_commision >= 0){
+          $("#cost").val('');
+          $("#cost").val(officer_commision);
+          // temporaryField
+          $("#temporaryOfficerComision").val('');
+          $("#temporaryOfficerComision").val(officer_commision);
         }else{
-          $('input[name="due_to_admin"]').val(full_contact);
-          $('input[name="due_to_admin_show"]').val(full_contact);
+          $("#cost").val('');
+          $("#cost").val(0);
+          $("#temporaryOfficerComision").val('');
+          $("#temporaryOfficerComision").val(0);
+        }
+      }
+
+      function agentCommision(){
+        var agent_commision = parseFloat( $('#agent_commision').val() );
+        var officer_commision = parseFloat( $('input[id="temporaryOfficerComision"]').val() );
+
+        if(agent_commision >= 0){
+          var total_costing = (agent_commision + officer_commision);
+          $("#cost").val('');
+          $("#cost").val(total_costing);
+        }else{
+          $("#cost").val('');
+          $("#cost").val(officer_commision);
+        }
+
+      }
+
+      // ================ Full Contact ===========
+      function fullContact(){
+        var full_contact = parseFloat( $('input[name="full_contact"]').val() );
+
+        var total_pay = parseFloat( $('input[name="total_pay"]').val() );
+        var payment_to_admin = parseFloat( $('input[name="payment_to_admin"]').val() );
+        var totalPayment = (total_pay + payment_to_admin);
+
+        if(full_contact >= 0){
+          var due = (full_contact - totalPayment);
+          $('input[name="due_to_admin_show"]').val('');
+          $('input[name="due_to_admin"]').val('');
+          $('input[name="due_to_admin_show"]').val(due);
+          $('input[name="due_to_admin"]').val(due);
+        }else{
+          $('input[name="due_to_admin_show"]').val('');
+          $('input[name="due_to_admin"]').val('');
+          $('input[name="due_to_admin_show"]').val(0);
+          $('input[name="due_to_admin"]').val(0);
+        }
+
+      }
+      // ================ Full Contact ===========
+      // ================ Payment To Admin ===========
+      function paymentToAdmin(){
+        var payment_to_admin = parseFloat( $('input[name="payment_to_admin"]').val() );
+        var total_pay = parseFloat( $('input[name="total_pay"]').val() );
+        var full_contact = parseFloat( $('input[name="full_contact"]').val() );
+
+        if(payment_to_admin >= 0){
+          var totalPay = (payment_to_admin + total_pay);
+          var due = (full_contact - totalPay);
+          $('input[name="due_to_admin_show"]').val('');
+          $('input[name="due_to_admin"]').val('');
+          $('input[name="due_to_admin_show"]').val(due);
+          $('input[name="due_to_admin"]').val(due);
+        }else{
+          var totalPay = (0 + total_pay);
+          var due = (full_contact - totalPay);
+          $('input[name="due_to_admin_show"]').val('');
+          $('input[name="due_to_admin"]').val('');
+          $('input[name="due_to_admin_show"]').val(due);
+          $('input[name="due_to_admin"]').val(due);
+
         }
 
 
       }
+      function paymentToNormal(){
+        var payment_to_admin = parseFloat( $('input[name="payment_to_admin"]').val() );
+        var total_pay = parseFloat( $('input[name="total_pay"]').val() );
+        var full_contact = parseFloat( $('input[name="full_contact"]').val() );
 
-      $('#officer_commision').on('keyup', function(){
-        var agent = $("#agent_commision").val();
-        if(agent > 0){
-          $('#cost').val(agent);
+        if(total_pay >= 0){
+          var totalPay = (payment_to_admin + total_pay);
+          var due = (full_contact - totalPay);
+          $('input[name="due_to_admin_show"]').val('');
+          $('input[name="due_to_admin"]').val('');
+          $('input[name="due_to_admin_show"]').val(due);
+          $('input[name="due_to_admin"]').val(due);
         }else{
-          $('#cost').val(0);
+          var totalPay = (0 + total_pay);
+          var due = (full_contact - totalPay);
+          $('input[name="due_to_admin_show"]').val('');
+          $('input[name="due_to_admin"]').val('');
+          $('input[name="due_to_admin_show"]').val(due);
+          $('input[name="due_to_admin"]').val(due);
+
         }
 
-      });
 
-      // $('#agent_commision').on('keyup', function(){
-      //   var officer = $("#officer_commision").val();
-      //   var total = parseInt($(this).val()) + parseInt(officer);
-      //   $('#cost').val(total);
-      // })
+      }
+      /* ================ do work ================ */
     </script>
 @endsection

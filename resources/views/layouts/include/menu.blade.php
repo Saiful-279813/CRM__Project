@@ -18,7 +18,7 @@
                         {{-- Employee Type --}}
                         <li><a class="@yield('employee-type')" href="{{ route('employee-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Type </a></li>
                         {{-- Visa Type --}}
-                        
+
 
                     </ul>
                 </li>

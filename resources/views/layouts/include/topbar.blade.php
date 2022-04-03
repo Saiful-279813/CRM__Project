@@ -20,12 +20,15 @@
                     <span class="bx bx-search-alt"></span>
                 </div>
             </form>
-            <form class="app-search d-none d-lg-block">
+
+            <form class="app-search d-none d-lg-block" action="{{ route('customer-search') }}" method="post">
+              @csrf
                 <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Customer Search Here...">
+                    <input type="text" class="form-control" placeholder="Customer Search Here..." name="customer">
                     <span class="bx bx-search-alt"></span>
                 </div>
             </form>
+
         </div>
         <div class="d-flex">
             <div class="dropdown d-inline-block d-lg-none ml-2">

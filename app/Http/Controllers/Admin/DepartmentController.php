@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmployeeDepartment;
+use Carbon\Carbon;
 use Session;
 
 class DepartmentController extends Controller
@@ -25,10 +26,10 @@ class DepartmentController extends Controller
     /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        $data = $this->getAll();
-        return view('admin.department.index',compact('data'));
+        $department = $this->getAll();
+        return view('admin.department.index',compact('department'));
     }
-    
+
     public function create()
     {
         return view('admin.department.create');
@@ -57,7 +58,7 @@ class DepartmentController extends Controller
     {
         /* ========== Validation ========== */
         $request->validate([
-          'title' => 'required|unique:employee_departments,title,'.$id
+          'title' => 'required',
         ]);
         /* ========== Insert Data in database ========== */
         $update = EmployeeDepartment::where('department_id',$id)->update([
@@ -66,7 +67,7 @@ class DepartmentController extends Controller
           'updated_at' => Carbon::now(),
         ]);
         Session::flash('success_update','value');
-        return redirect()->back();
+        return redirect()->route('department.index');
     }
 
 }

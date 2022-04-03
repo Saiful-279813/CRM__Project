@@ -345,6 +345,11 @@ class CustomerController extends Controller
         return redirect()->route('customers.index');
     }
 
+    public function customerInvoice($id){
+      $data = $this->findCustomer($id);
+      return view('admin.download.customer.invoice',compact('data'));
+    }
+
     /* ===========  */
     public function customerListDownload(){
       $customer_list = Customer::leftjoin('customer_transactions','customers.customer_id','=','customer_transactions.customer_id')

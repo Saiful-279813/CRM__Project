@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmployeeDesignation;
+use Carbon\Carbon;
+use Session;
 
 class DesignationController extends Controller
 {
@@ -24,8 +26,8 @@ class DesignationController extends Controller
     /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        $data = $this->getAll();
-        return view('admin.designation.index',compact('data'));
+        $designation = $this->getAll();
+        return view('admin.designation.index',compact('designation'));
     }
 
     public function create()
@@ -56,7 +58,7 @@ class DesignationController extends Controller
     {
         /* ========== Validation ========== */
         $request->validate([
-          'title' => 'required|unique:employee_designations,title,'.$id
+          'title' => 'required'
         ]);
         /* ========== Insert Data in database ========== */
         $update = EmployeeDesignation::where('designation_id',$id)->update([
@@ -65,6 +67,6 @@ class DesignationController extends Controller
           'updated_at' => Carbon::now(),
         ]);
         Session::flash('success_update','value');
-        return redirect()->back();
+        return redirect()->route('designation.index');
     }
 }

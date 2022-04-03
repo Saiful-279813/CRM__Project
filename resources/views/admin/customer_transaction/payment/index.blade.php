@@ -27,9 +27,16 @@
   <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8">
-          @if(Session::has('success_save_change'))
+          @if(Session::has('success_store'))
             <div class="alert alert-success alertsuccess" role="alert">
-               <strong>Successfully!</strong> Save & Change Customer Transaction.
+               <strong>Successfully!</strong> Customer Transaction Done.
+            </div>
+          @endif
+
+
+          @if(Session::has('due_amount_0'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Opps!</strong> Your arrears have already been paid.
             </div>
           @endif
 
@@ -52,44 +59,24 @@
 
             <div class="card-body card_form">
                 <div class="row">
-                  <div class="form-group custom_form_group col-md-4">
-                      <label class="control-label">Full Contact:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" name="full_contact" value="{{ $transaction->full_contact }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup">
-                          @error('full_contact')
-                          <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                      </div>
+                  <div class="form-group custom_form_group col-md-2">
+                      <label class="control-label">Full Contact: <strong>{{ $transaction->full_contact }}</strong> </label>
+                  </div>
+                  <div class="form-group custom_form_group col-md-2">
+                      <label class="control-label">Total Payment: <strong id="payment_amount">{{ $transaction->total_pay }}</strong> </label>
+                      <input type="hidden" name="payment_amount_input" value="{{ $transaction->total_pay }}">
+                  </div>
+                  <div class="form-group custom_form_group col-md-2">
+                      <label class="control-label">Total Due: <strong id="due_amount">{{ $transaction->due_to_admin }}</strong> </label>
+                      <input type="hidden" name="due_amount_input" value="{{ $transaction->due_to_admin }}">
                   </div>
 
-                  <div class="form-group custom_form_group col-md-4">
-                      <label class="control-label">Total Payment:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="text" placeholder="Amount..." name="paymentsummery" class="form-control" value="{{ $transaction->total_pay }}" disabled>
-                          <input type="text" name="paymentsummery" value="">
-                          @error('total_pay')
-                          <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                      </div>
-                  </div>
-
-                  <div class="form-group custom_form_group col-md-4">
-                      <label class="control-label">Total Due:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="text" placeholder="Amount..." name="due_to_admin_show" class="form-control" value="{{ $transaction->due_to_admin }}" disabled>
-
-                          <input type="hidden" name="due_to_admin" value="{{ $transaction->due_to_admin }}">
-                          @error('due_to_admin')
-                          <span class="text-danger">{{ $message }}</span>
-                          @enderror
-                      </div>
-                  </div>
                 </div>
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Payment:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Amount..." class="form-control" name="total_pay" value="{{ old('total_pay') }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup" onblur="payment()">
+                          <input type="text" placeholder="Amount..." class="form-control" name="total_pay" value="{{ old('total_pay') }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,50]" data-parsley-trigger="keyup" onkeyup="payment()">
                           @error('total_pay')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -98,9 +85,9 @@
                 </div>
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6 m-auto">
-                      <label class="control-label">Remarks:<span class="req_star">*</span></label>
+                      <label class="control-label">Remarks:</label>
                       <div class="">
-                          <textarea name="remarks" class="form-control" placeholder="Remarks..." required data-parsley-pattern="[a-zA-Z-_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup"></textarea>
+                          <textarea name="remarks" class="form-control" placeholder="Remarks..." data-parsley-pattern="[a-zA-Z-_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup"></textarea>
                           @error('remarks')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -132,26 +119,29 @@
     <script type="text/javascript">
       /* ================ do work ================ */
       function payment(){
-        let full_contact = parseInt($('input[name="full_contact"]').val());
+        var due_amountshow = parseFloat( $('#due_amount').text() );
 
-        let total_pay = parseInt($('input[name="total_pay"]').val());
-        let paymentsummery = parseInt($('input[name="paymentsummery"]').val());
+        var due_amount_input = parseFloat( $('input[name="due_amount_input"]').val() );
 
-        if(total_pay != ''){
-          let result2 = (paymentsummery + total_pay);
-          let result = (full_contact - total_pay);
+        var payment_amount_input = parseFloat( $('input[name="payment_amount_input"]').val() );
 
+        var total_pay = parseFloat( $('input[name="total_pay"]').val() );
 
-          $('input[name="paymentsummery"]').val(result2);
+        if(total_pay >= 0 ){
+          var due = (due_amount_input - total_pay);
+          var payment = (payment_amount_input + total_pay);
+          $('#due_amount').text('');
+          $('#due_amount').text(due);
 
-          $('input[name="due_to_admin"]').val(result);
-          $('input[name="due_to_admin_show"]').val(result);
+          $('#payment_amount').text('');
+          $('#payment_amount').text(payment);
         }else{
-          $('input[name="paymentsummery"]').val(paymentsummery);
-          $('input[name="due_to_admin"]').val(full_contact);
-          $('input[name="due_to_admin_show"]').val(full_contact);
-        }
+          $('#due_amount').text('');
+          $('#due_amount').text(due_amount_input);
 
+          $('#payment_amount').text('');
+          $('#payment_amount').text(payment_amount_input);
+        }
 
       }
       /* ================ do work ================ */

@@ -11,9 +11,11 @@
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/bootstrap.min.css" id="bootstrap-style"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
+
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/icons.min.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/app.min.css" id="app-style"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/select2.min.css"/>
+        <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/toastr/toastr.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/style.css"/>
         <link rel="stylesheet" href="{{asset('contents/admin')}}/assets/css/custom.css"/>
         @yield('styles')
@@ -54,6 +56,30 @@
         <script src="{{asset('contents/admin')}}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
         <script src="{{asset('contents/admin')}}/assets/libs/metismenu/metisMenu.min.js"></script>
         <script src="{{asset('contents/admin')}}/assets/libs/simplebar/simplebar.min.js"></script>
+
+        <script src="{{asset('contents/admin')}}/assets/toastr/toastr.min.js"></script>
+        <script>
+            @if (Session::has('message'))
+                var type ="{{ Session::get('alert-type', 'info') }}"
+                switch(type){
+                case 'info':
+                toastr.info(" {{ Session::get('message') }} ");
+                break;
+
+                case 'success':
+                toastr.success(" {{ Session::get('message') }} ");
+                break;
+
+                case 'warning':
+                toastr.warning(" {{ Session::get('message') }} ");
+                break;
+
+                case 'error':
+                toastr.error(" {{ Session::get('message') }} ");
+                break;
+                }
+            @endif
+        </script>
         <script src="{{asset('contents/admin')}}/assets/libs/node-waves/waves.min.js"></script>
         <script src="{{asset('contents/admin')}}/assets/js/pages/dashboard.init.js"></script>
         <!-- sweet alert -->

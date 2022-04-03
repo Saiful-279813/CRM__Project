@@ -95,7 +95,7 @@
 
                                              <a class="btn btn-success btn-sm" href="{{ route('customers.show',$data->customer_id) }}"><i class="fas fa-eye"></i></a>
 
-                                              <a class="btn btn-danger btn-sm" href="#"><i class="fas fa-download"></i></a>
+                                              <a class="btn btn-danger btn-sm" href="{{ route('customers.invoice',$data->customer_id) }}"><i class="fas fa-download"></i></a>
                                            </div>
                                            {{-- do action --}}
                                          </div>

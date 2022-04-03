@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BloodGroup;
+use Carbon\Carbon;
 use Session;
 
 class BloodGroupController extends Controller
@@ -25,8 +26,8 @@ class BloodGroupController extends Controller
     /*+++++++++++++++++++++++++++*/
     public function index()
     {
-        $data = $this->getAll();
-        return view('admin.blood.index',compact('data'));
+        $blood = $this->getAll();
+        return view('admin.blood.index',compact('blood'));
     }
 
     public function create()
@@ -38,7 +39,7 @@ class BloodGroupController extends Controller
     {
         /* ========== Validation ========== */
         $request->validate([
-          'title' => 'required|unique:blood_groups,title',
+          'name' => 'required|unique:blood_groups,name',
         ]);
         /* ========== Insert Data in database ========== */
         $data =  $request->all();
@@ -57,15 +58,16 @@ class BloodGroupController extends Controller
     {
         /* ========== Validation ========== */
         $request->validate([
-          'title' => 'required|unique:blood_groups,title,'.$id
+          'name' => 'required'
         ]);
+
         /* ========== Insert Data in database ========== */
         $update = BloodGroup::where('blood_group_id',$id)->update([
-          'title' => $request->title,
+          'name' => $request->name,
           'remarks' => $request->remarks,
           'updated_at' => Carbon::now(),
         ]);
         Session::flash('success_update','value');
-        return redirect()->back();
+        return redirect()->route('blood.index');
     }
 }

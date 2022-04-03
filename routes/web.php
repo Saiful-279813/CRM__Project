@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BloodGroupController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
+use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SalaryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     Route::post('customer-passport-photo/{customer_id}/update', [CustomerController::class, 'updatePassportPhoto'])->name('customer-passport-image');
     // =========== Photo ============
     Route::get('customer/list-download', [CustomerController::class, 'customerListDownload'])->name('customer-list-download');
+    Route::get('customer/invoice/{customer_id}', [CustomerController::class, 'customerInvoice'])->name('customers.invoice');
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     // --------------- Customers ------------------
 
@@ -98,6 +100,10 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- Salary Details ------------------
     Route::resource('salary', SalaryController::class);
     // --------------- Salary Details ------------------
+
+    // --------------- Customer Search ------------------
+    Route::post('customer-search', [SearchController::class, 'customer'])->name('customer-search');
+    // --------------- Customer Search ------------------
 
 
 
