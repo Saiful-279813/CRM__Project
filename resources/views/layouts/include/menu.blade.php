@@ -22,7 +22,21 @@
 
                     </ul>
                 </li>
-
+                {{-- accounts & Finance --}}
+                <li class="@yield('accounts')"><a href="#" class="waves-effect"><i class="bx bx-package"></i><span>Finance & Accounting</span></a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a class="@yield('balancesheet')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Balance Sheet </a></li>
+                        <li><a class="@yield('summary')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Summary </a></li>
+                        <li><a class="@yield('income')" href="{{ route('income.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Daily Income </a></li>
+                        <li><a class="@yield('expense')" href="{{ route('expense.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Daily Expense </a></li>
+                        <li><a class="@yield('incomeCategory')" href="{{ route('income-category.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Income Category </a></li>
+                        <li><a class="@yield('expenseCategory')" href="{{ route('expense-category.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Expense Category </a></li>
+                        <li><a class="@yield('cashflow')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Cash Flow </a></li>
+                        <li><a class="@yield('payment')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Payment </a></li>
+                        {{-- <li><a class="@yield('loan')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Loan </a></li> --}}
+                    </ul>
+                </li>
+                {{-- accounts & Finance --}}
                 <li class="@yield('customer')"><a href="#" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Customers</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('addCustomer')" href="{{ route('customers.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Add Customer </a></li>

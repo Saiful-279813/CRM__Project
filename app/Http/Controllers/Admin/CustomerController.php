@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\VisaTypeController;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\CustomerTransactions;
+use App\Models\CustomerPayment;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -30,11 +31,13 @@ class CustomerController extends Controller
               ->leftjoin('customer_transactions','customers.customer_id','=','customer_transactions.customer_id')
               ->leftjoin('countries','customers.place_country_id','=','countries.country_id')
               ->leftjoin('employees','customers.employee_id','=','employees.employee_id')
+              ->leftjoin('visa_types','customers.visa_type_id','=','visa_types.visa_type_id')
               ->select(
                 'customers.*',
                 'customer_transactions.*',
                 'countries.name',
                 'employees.employee_name',
+                'visa_types.visa_type_name',
                 )
               ->first();
     }
@@ -347,7 +350,8 @@ class CustomerController extends Controller
 
     public function customerInvoice($id){
       $data = $this->findCustomer($id);
-      return view('admin.download.customer.invoice',compact('data'));
+      $payment = CustomerPayment::where('customer_id',$id)->orderBy('cust_pay_id','DESC')->get();
+      return view('admin.download.customer.invoice',compact('data','payment'));
     }
 
     /* ===========  */

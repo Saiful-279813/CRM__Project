@@ -222,7 +222,7 @@
               {{-- do work --}}
             </div>
             <div class="card-footer card_footer_button text-center">
-                <a href="#" class="btn btn-primary waves-effect">PDF Or Print</a>
+                <a href="{{ route('customers.invoice',$data->customer_id) }}" class="btn btn-primary waves-effect">PDF Or Print</a>
             </div>
           </div>
           {{-- visa form --}}

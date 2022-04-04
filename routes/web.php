@@ -13,6 +13,10 @@ use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SalaryController;
+use App\Http\Controllers\Admin\IncomeCategoryController;
+use App\Http\Controllers\Admin\IncomeController;
+use App\Http\Controllers\Admin\ExpenseCategoryController;
+use App\Http\Controllers\Admin\ExpenseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -105,7 +109,19 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     Route::post('customer-search', [SearchController::class, 'customer'])->name('customer-search');
     // --------------- Customer Search ------------------
 
+    // --------------- Accounts & Finance ------------------
+    // --------------- Income Category ------------------
+    Route::resource('income-category', IncomeCategoryController::class);
+    // --------------- Income ------------------
+    Route::resource('income', IncomeController::class);
+    // --------------- Expense Category ------------------
+    Route::resource('expense-category', ExpenseCategoryController::class);
+    // --------------- Expense ------------------
+    Route::resource('expense', ExpenseController::class);
 
+
+
+    // --------------- Accounts & Finance ------------------
 
 
 
