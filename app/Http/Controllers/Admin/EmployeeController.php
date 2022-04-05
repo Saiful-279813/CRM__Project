@@ -94,14 +94,7 @@ class EmployeeController extends Controller
        return view('admin.employee.create',compact('employeeId','bloodGroup','department','designation','employeeType'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         /* =============== Form Validation =============== */
         $request->validate([
           'employee_name' => 'required|min:3|max:50',
@@ -166,48 +159,94 @@ class EmployeeController extends Controller
         return redirect()->route('salary.edit',$insert);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    public function show($id){
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+        $data = $this->findCustomer($id);
+        $employeeId = $this->employeeId();
+        $bloodGroup = $this->bloodGroup();
+        $department = $this->department();
+        $designation = $this->designation();
+        $employeeType = $this->employeeType();
+        return view('admin.employee.edit',compact('data','employeeId','bloodGroup','department','designation','employeeType'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+        /* =============== Form Validation =============== */
+        $this->validate($request,[
+          'employee_name' => 'required|min:3|max:50',
+          'employee_father' => 'required|min:3|max:50',
+          'employee_mother' => 'required|min:3|max:50',
+
+          'mobile_no' => 'required|unique:employees,mobile_no,'.$id.',employee_id',
+          'email' => 'required|unique:employees,email,'.$id.',employee_id',
+          'nid' => 'required|unique:employees,nid,'.$id.',employee_id',
+
+
+          'customer_phone' => 'required|unique:customers,customer_phone,'.$id.',customer_id',
+
+          'present_address' => 'required|max:250',
+          'parmanent_address' => 'required|max:250',
+          'date_of_birth' => 'required',
+          'maritus_status' => 'required',
+          'gender' => 'required',
+          'joining_date' => 'required',
+          'confirmation_date' => 'required',
+          'appointment_date' => 'required',
+          'designation_id' => 'required',
+          'department_id' => 'required',
+          'emp_type_id' => 'required',
+        ]);
+
+        dd($request->all());
+        // update data in database
+        $update = Employee::where('employee_id',$id)->update([
+          'ID_Number' => $request->ID_Number,
+          'employee_name' => $request->employee_name,
+          'employee_father' => $request->employee_father,
+          'employee_mother' => $request->employee_mother,
+          'mobile_no' => $request->mobile_no,
+          'nid' => $request->nid,
+          'blood_group_id' => $request->blood_group_id,
+          'present_address' => $request->present_address,
+          'parmanent_address' => $request->parmanent_address,
+          'date_of_birth' => $request->date_of_birth,
+          'maritus_status' => $request->maritus_status,
+          'gender' => $request->gender,
+          'joining_date' => $request->joining_date,
+          'confirmation_date' => $request->confirmation_date,
+          'appointment_date' => $request->appointment_date,
+          'designation_id' => $request->designation_id,
+          'department_id' => $request->department_id,
+          'emp_type_id' => $request->emp_type_id,
+          'employee_slug' => strtolower(str_replace(' ','-',$request->employee_name)),
+          'employee_creator' => Auth::user()->id,
+          'updated_at' => Carbon::now(),
+        ]);
+
+        if($request->file('profile_photo')){
+          if($request->old_profile_photo != ''){
+            unlink($request->old_profile_photo);
+          }
+          /* ========= make Image ========= */
+          $image = $request->file('profile_photo');
+          $imageName = 'image'.'-'.$request->ID_Number.'-'.$image->getClientOriginalExtension();
+          Image::make($image)->resize(150,150)->save('uploads/employee/'.$imageName);
+          $profile_photo = 'uploads/employee/'.$imageName;
+
+          $update = Employee::where('employee_id',$id)->update([
+            'profile_photo' => $profile_photo,
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+
+        /* ========= flash massege ========= */
+        Session::flash('success_update','value');
+        return redirect()->back();
+        // return redirect()->route('employee.show',$id);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

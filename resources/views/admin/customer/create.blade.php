@@ -35,9 +35,8 @@
   {{-- main work --}}
   <div class="row">
     <div class="col-lg-12">
-        <form class="form-horizontal" method="post" action="{{ route('customers.store') }}" enctype="multipart/form-data" id="customerForm">
+        <form class="form-horizontal" method="post" action="{{ route('customers.store') }}" enctype="multipart/form-data" id="customerCreate">
           @csrf
-
           <div class="card">
             <div class="card-header custom-card-header">
                 <div class="row">
@@ -82,7 +81,6 @@
                       </div>
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Phone Number:<span class="req_star">*</span></label>
@@ -101,13 +99,11 @@
                       </div>
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" class="form-control" placeholder="Address Here..." name="customer_address" value="{{ old('customer_address') }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[10,255]"
-                            data-parsley-trigger="keyup">
+                          <input type="text" class="form-control" placeholder="Address Here..." name="customer_address" value="{{ old('customer_address') }}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
                       </div>
                       @error('customer_address')
                       <span class="text-danger">{{ $message }}</span>
@@ -174,7 +170,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Visa Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Visa Name" class="form-control" name="visa_name" value="{{old('visa_name')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[1,200]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Visa Name" class="form-control" name="visa_name" value="{{old('visa_name')}}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,200]" data-parsley-trigger="keyup">
                           @error('visa_name')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -183,7 +179,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Visa Remarks:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Remarks..." class="form-control" name="visa_remarks" value="{{old('visa_remarks')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Remarks..." class="form-control" name="visa_remarks" value="{{old('visa_remarks')}}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
                           @error('visa_remarks')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -214,7 +210,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Visa Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Visa Number" class="form-control" name="visa_number" value="{{old('visa_number')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Visa Number" class="form-control" name="visa_number" value="{{old('visa_number')}}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
                           @error('visa_number')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -223,7 +219,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Passport Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Passport Number" class="form-control" name="passport_number" value="{{old('passport_number')}}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Passport Number" class="form-control" name="passport_number" value="{{old('passport_number')}}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
                           @error('passport_number')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -232,7 +228,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Passport Location:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="PP Location" class="form-control" name="pp_location" value="{{old('pp_location')}}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="PP Location" class="form-control" name="pp_location" value="{{old('pp_location')}}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
                           @error('pp_location')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -283,7 +279,7 @@
                   <div class="form-group custom_form_group col-md-3">
                       <label class=" control-label">Medical Date:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="date" name="madical_date" class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                          <input type="date" name="madical_date" class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
                           @error('madical_date')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -376,7 +372,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Work Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" class="form-control" placeholder="Work Name..." name="work" value="{{ old('work') }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          <input type="text" class="form-control" placeholder="Work Name..." name="work" value="{{ old('work') }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
                           @error('work')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -384,6 +380,7 @@
                   </div>
                 </div>
                 {{-- visa information --}}
+                {{-- Image --}}
                 <hr>
                 {{-- Image --}}
                 <div class="row">
@@ -443,7 +440,6 @@
                   </div>
 
                 </div>
-                {{-- Image --}}
             </div>
 
               <div class="card-footer card_footer_button text-center">
@@ -457,15 +453,18 @@
   {{-- main work --}}
 @endsection
 
+@section('parsley')
+
+@endsection
+
 @section('scripts')
     <script type="text/javascript">
       /* ================ do work ================ */
       $(document).ready(function() {
-          $('#customerForm').parsley();
+          $('#customerCreate').parsley();
       });
       /* ================ do work ================ */
     </script>
-
     {{-- for image --}}
     <script>
       function customer_photoUrl(input){

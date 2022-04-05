@@ -125,7 +125,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" class="form-control" placeholder="Address Here..." name="customer_address" value="{{ $data->customer_address }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[10,255]"
+                          <input type="text" class="form-control" placeholder="Address Here..." name="customer_address" value="{{ $data->customer_address }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[10,255]"
                             data-parsley-trigger="keyup">
                       </div>
                       @error('customer_address')
@@ -193,7 +193,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Visa Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Visa Name" class="form-control" name="visa_name" value="{{ $data->visa_name }}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[1,200]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Visa Name" class="form-control" name="visa_name" value="{{ $data->visa_name }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,200]" data-parsley-trigger="keyup">
                           @error('visa_name')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -202,7 +202,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Visa Remarks:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Remarks..." class="form-control" name="visa_remarks" value="{{ $data->visa_remarks }}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Remarks..." class="form-control" name="visa_remarks" value="{{ $data->visa_remarks }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
                           @error('visa_remarks')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -233,7 +233,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Visa Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Visa Number" class="form-control" name="visa_number" value="{{ $data->visa_number }}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Visa Number" class="form-control" name="visa_number" value="{{ $data->visa_number }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
                           @error('visa_number')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -242,7 +242,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Passport Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Passport Number" class="form-control" name="passport_number" value="{{ $data->passport_number }}" required data-parsley-pattern="[a-zA-Z0-9_-]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Passport Number" class="form-control" name="passport_number" value="{{ $data->passport_number }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
                           @error('passport_number')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -251,7 +251,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Passport Location:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="PP Location" class="form-control" name="pp_location" value="{{ $data->pp_location }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="PP Location" class="form-control" name="pp_location" value="{{ $data->pp_location }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
                           @error('pp_location')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -395,7 +395,7 @@
                   <div class="form-group custom_form_group col-md-4">
                       <label class=" control-label">Work Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" class="form-control" placeholder="Work Name..." name="work" value="{{ $data->work }}" required data-parsley-pattern="[a-zA-Z0-9_- ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
+                          <input type="text" class="form-control" placeholder="Work Name..." name="work" value="{{ $data->work }}" required data-parsley-pattern="[a-zA-Z0-9_ ]+$" data-parsley-length="[1,220]" data-parsley-trigger="keyup">
                           @error('work')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror

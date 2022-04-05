@@ -87,23 +87,26 @@ class IncomeController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        /* ============= Form Validation ============= */
         $this->validate($request,[
-          'exp_cat_name'=>'required|unique:expanse_categories,exp_cat_name,'.$id.',income_id'
-        ],[
-          'exp_cat_name.required'=>'Please enter Income Category name!',
+          'in_cat_id'=>'required',
+          'in_cat_remarks'=>'required',
+          'income_amount'=>'required|numeric',
+          'date'=>'required',
         ]);
-        /* ============= Insert data in database ============= */
-        $update = Income::where('income_id',$id)->update([
-          'exp_cat_name' => $request->exp_cat_name,
-          'exp_cat_remarks' => $request->exp_cat_remarks,
-          'exp_cat_creator' => Auth::user()->id,
-          'exp_cat_slug' => strtolower(str_replace(' ','-',$request->exp_cat_name)),
-          'updated_at'=> Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        /* ============= Form Validation ============= */
+        $update=Income::where('income_id',$id)->update([
+            'in_cat_id' => $request['in_cat_id'],
+            'income_date' => $request['date'],
+            'income_amount' => $request['income_amount'],
+            'income_details'=> $request['in_cat_remarks'],
+            'income_creator' => Auth::user()->id,
+            'income_slug' => uniqid('income'),
+            'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         Session::flash('success_update');
-        return redirect()->route('expense-category.index');
+        return redirect()->route('income.index');
 
     }
 }

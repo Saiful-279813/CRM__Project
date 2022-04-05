@@ -96,6 +96,7 @@
         </script>
         <!-- form validation -->
         <script src="{{asset('contents/admin')}}/assets/js/parsley.min.js"></script>
+        @yield('parsley')
         <script src="{{asset('contents/admin')}}/assets/js/app.js"></script>
         <script src="{{asset('contents/admin')}}/assets/js/custom.js"></script>
         @yield('scripts')

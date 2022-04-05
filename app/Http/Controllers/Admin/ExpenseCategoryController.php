@@ -18,6 +18,10 @@ class ExpenseCategoryController extends Controller
       return $data = ExpanseCategory::orderBy('exp_cat_id','DESC')->get();
     }
 
+    public function getSomeAll(){
+      return $data = ExpanseCategory::select('exp_cat_id','exp_cat_name')->orderBy('exp_cat_id','DESC')->get();
+    }
+
     public function findData($id){
       return $data = ExpanseCategory::where('exp_cat_id',$id)->first();
     }
