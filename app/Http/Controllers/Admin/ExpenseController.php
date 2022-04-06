@@ -109,4 +109,12 @@ class ExpenseController extends Controller
         return redirect()->route('expense.index');
 
     }
+
+
+    public function expenseApprove(){
+      return "Comming Soon";
+    }
+
+
+
 }

@@ -246,7 +246,12 @@ class EmployeeController extends Controller
         Session::flash('success_update','value');
         return redirect()->back();
         // return redirect()->route('employee.show',$id);
-
     }
+
+    public function employeeApprove(){
+      return "Comming Soon";
+    }
+
+
 
 }

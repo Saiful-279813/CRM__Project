@@ -17,16 +17,20 @@
                         <li><a class="@yield('designation')" href="{{ route('designation.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Designation </a></li>
                         {{-- Employee Type --}}
                         <li><a class="@yield('employee-type')" href="{{ route('employee-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Type </a></li>
-                        {{-- Visa Type --}}
+                        {{-- ================== Approval ================== --}}
+                        <li><a class="@yield('income-approve')" href="{{ route('income-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Income Approve </a></li>
 
+                        <li><a class="@yield('expense-approve')" href="{{ route('expense-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Expense Approve </a></li>
 
+                        <li><a class="@yield('employee-approve')" href="{{ route('employee-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Approve </a></li>
+                        {{-- ================== Approval ================== --}}
                     </ul>
                 </li>
                 {{-- accounts & Finance --}}
                 <li class="@yield('accounts')"><a href="#" class="waves-effect"><i class="bx bx-package"></i><span>Finance & Accounting</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('balancesheet')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Balance Sheet </a></li>
-                        <li><a class="@yield('summary')" href="#"> <i class="fas fa-arrow-right sm child_i"></i> Summary </a></li>
+                        <li><a class="@yield('summary')" href="{{ route('income-expense.summary') }}"> <i class="fas fa-arrow-right sm child_i"></i> Summary </a></li>
                         <li><a class="@yield('income')" href="{{ route('income.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Daily Income </a></li>
                         <li><a class="@yield('expense')" href="{{ route('expense.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Daily Expense </a></li>
                         <li><a class="@yield('incomeCategory')" href="{{ route('income-category.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Income Category </a></li>

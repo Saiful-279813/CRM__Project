@@ -107,6 +107,12 @@ class IncomeController extends Controller
 
         Session::flash('success_update');
         return redirect()->route('income.index');
-
     }
+
+    public function incomeApprove(){
+      return "Comming Soon.....";
+    }
+
+
+
 }

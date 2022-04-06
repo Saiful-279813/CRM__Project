@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\IncomeCategoryController;
 use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\ExpenseCategoryController;
 use App\Http\Controllers\Admin\ExpenseController;
+use App\Http\Controllers\Admin\IncomeExpenseSummaryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -99,6 +100,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
 
     // --------------- Employee ------------------
     Route::resource('employee', EmployeeController::class);
+    Route::get('employee-approve', [EmployeeController::class, 'employeeApprove'])->name('employee-approve');
     // --------------- Employee ------------------
 
     // --------------- Salary Details ------------------
@@ -114,12 +116,14 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     Route::resource('income-category', IncomeCategoryController::class);
     // --------------- Income ------------------
     Route::resource('income', IncomeController::class);
+    Route::get('income-approve', [IncomeController::class, 'incomeApprove'])->name('income-approve');
     // --------------- Expense Category ------------------
     Route::resource('expense-category', ExpenseCategoryController::class);
     // --------------- Expense ------------------
     Route::resource('expense', ExpenseController::class);
+    Route::get('expense-approve', [ExpenseController::class, 'expenseApprove'])->name('expense-approve');
 
-
+    Route::get('summary', [IncomeExpenseSummaryController::class, 'index'])->name('income-expense.summary');
 
     // --------------- Accounts & Finance ------------------
 
