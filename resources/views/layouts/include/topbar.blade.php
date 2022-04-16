@@ -14,9 +14,10 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-            <form class="app-search d-none d-lg-block" style="margin-right:30px">
+            <form class="app-search d-none d-lg-block" style="margin-right:30px" action="{{ route('employee-search') }}" method="post">
+              @csrf
                 <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Employee Search Here...">
+                    <input type="text" class="form-control" placeholder="Employee Search Here..." name="employee">
                     <span class="bx bx-search-alt"></span>
                 </div>
             </form>

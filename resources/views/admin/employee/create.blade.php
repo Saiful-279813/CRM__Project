@@ -63,7 +63,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Name" class="form-control" name="employee_name" value="{{old('employee_name')}}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Name" class="form-control" name="employee_name" value="{{old('employee_name')}}" required>
                           @error('employee_name')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -75,7 +75,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Father Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Father Name" class="form-control" name="employee_father" value="{{old('employee_father')}}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Father Name" class="form-control" name="employee_father" value="{{old('employee_father')}}" required>
                           @error('employee_father')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -84,7 +84,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Mother Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Mother Name" class="form-control" name="employee_mother" value="{{old('employee_mother')}}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Mother Name" class="form-control" name="employee_mother" value="{{old('employee_mother')}}" required>
                           @error('employee_mother')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -96,7 +96,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Mobile Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Phone" class="form-control" name="mobile_no" value="{{old('mobile_no')}}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Phone" class="form-control" name="mobile_no" value="{{old('mobile_no')}}" required>
                           @error('mobile_no')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -106,7 +106,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Email Address:</label>
                       <div class="">
-                          <input type="email" placeholder="Email" class="form-control" name="email" value="{{old('email')}}" data-parsley-length="[10,50]" data-parsley-trigger="keyup">
+                          <input type="email" placeholder="Email" class="form-control" name="email" value="{{old('email')}}">
                       </div>
                   </div>
                 </div>
@@ -115,7 +115,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">NID Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="NID Number" class="form-control" name="nid" value="{{old('nid')}}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[1,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="NID Number" class="form-control" name="nid" value="{{old('nid')}}" required>
                           @error('nid')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -142,7 +142,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Present Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Present Address" class="form-control" name="present_address" value="{{old('present_address')}}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Present Address" class="form-control" name="present_address" value="{{old('present_address')}}" required>
                           @error('present_address')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -151,7 +151,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Permanent Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Permanent Address" class="form-control" name="parmanent_address" value="{{old('parmanent_address')}}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,200]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Permanent Address" class="form-control" name="parmanent_address" value="{{old('parmanent_address')}}" required>
                           @error('parmanent_address')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -209,21 +209,6 @@
 
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Confirm Date:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="date" class="form-control" name="confirmation_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
-                      </div>
-                  </div>
-                  <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Appointment Date:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="date" class="form-control" name="appointment_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
-                      </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Designation:<span class="req_star">*</span></label>
                       <div class="">
                           <select class="form-control search_select" name="designation_id" id="search_select2" required>
@@ -272,7 +257,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="form-group col-md-6 m-auto mb-3">
+                  <div class="form-group col-md-6 mb-3">
                     <label class="col-form-label col_form_label">Photo:</label>
                     <div class="">
                       <div class="input-group">
@@ -284,6 +269,21 @@
                           <input type="text" class="form-control" readonly>
                       </div>
                       <img id="img-upload"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-6 mb-3">
+                    <label class="col-form-label col_form_label">NID Copy:</label>
+                    <div class="">
+                      <div class="input-group">
+                          <span class="input-group-btn">
+                              <span class="btn btn-default btn-file btnu_browse">
+                                  Browse… <input type="file" name="nid_photo" onchange="nidUrl(this)">
+                              </span>
+                          </span>
+                          <input type="text" class="form-control" readonly>
+                      </div>
+                      <img src="" id="nidShow" style="margin-top:10px">
                     </div>
                   </div>
                 </div>
@@ -309,5 +309,18 @@
           $('#customerForm').parsley();
       });
       /* ================ do work ================ */
+      function nidUrl(input){
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e){
+              $('#nidShow').attr('src',e.target.result).width(150)
+                    .height(150);
+          };
+          reader.readAsDataURL(input.files[0]);
+
+
+        }
+      }
     </script>
 @endsection

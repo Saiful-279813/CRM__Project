@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EmployeeTypeController;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\SalaryDetails;
+use App\Models\AdvancePay;
 use Carbon\Carbon;
 use Session;
 use Image;
@@ -28,7 +29,11 @@ class EmployeeController extends Controller
       return $data = Employee::orderBy('employee_id','DESC')->select('employee_id','employee_name')->get();
     }
 
-    public function findCustomer($id){
+    public function getAllEmployeeId(){
+      return $data = Employee::where('job_status','approve')->orderBy('employee_id','DESC')->select('employee_id','ID_Number')->get();
+    }
+
+    public function findEmployee($id){
       return $data = Employee::where('employee_id',$id)->first();
     }
 
@@ -90,7 +95,6 @@ class EmployeeController extends Controller
        $department = $this->department();
        $designation = $this->designation();
        $employeeType = $this->employeeType();
-
        return view('admin.employee.create',compact('employeeId','bloodGroup','department','designation','employeeType'));
     }
 
@@ -101,7 +105,6 @@ class EmployeeController extends Controller
           'employee_father' => 'required|min:3|max:50',
           'employee_mother' => 'required|min:3|max:50',
           'mobile_no' => 'required|unique:employees,mobile_no',
-          'email' => 'required|unique:employees,email',
           'nid' => 'required|unique:employees,nid',
           'present_address' => 'required|max:250',
           'parmanent_address' => 'required|max:250',
@@ -109,28 +112,19 @@ class EmployeeController extends Controller
           'maritus_status' => 'required',
           'gender' => 'required',
           'joining_date' => 'required',
-          'confirmation_date' => 'required',
-          'appointment_date' => 'required',
           'designation_id' => 'required',
           'department_id' => 'required',
           'emp_type_id' => 'required',
         ]);
 
-        /* ============= Insert data in database ============== */
-        $profile_photo = '';
-        if($request->file('profile_photo')){
-          /* ========= make Image ========= */
-          $image = $request->file('profile_photo');
-          $imageName = 'image'.'-'.$request->ID_Number.'-'.$image->getClientOriginalExtension();
-          Image::make($image)->resize(150,150)->save('uploads/employee/'.$imageName);
-          $profile_photo = 'uploads/employee/'.$imageName;
-        }
+        // ============== insert data in database ===============
         $insert = Employee::insertGetId([
           'ID_Number' => $request->ID_Number,
           'employee_name' => $request->employee_name,
           'employee_father' => $request->employee_father,
           'employee_mother' => $request->employee_mother,
           'mobile_no' => $request->mobile_no,
+          'email' => $request->email,
           'nid' => $request->nid,
           'blood_group_id' => $request->blood_group_id,
           'present_address' => $request->present_address,
@@ -139,16 +133,41 @@ class EmployeeController extends Controller
           'maritus_status' => $request->maritus_status,
           'gender' => $request->gender,
           'joining_date' => $request->joining_date,
-          'confirmation_date' => $request->confirmation_date,
-          'appointment_date' => $request->appointment_date,
           'designation_id' => $request->designation_id,
           'department_id' => $request->department_id,
           'emp_type_id' => $request->emp_type_id,
-          'profile_photo' => $profile_photo,
           'employee_slug' => strtolower(str_replace(' ','-',$request->employee_name)),
           'employee_creator' => Auth::user()->id,
           'created_at' => Carbon::now(),
         ]);
+        // ============= upload image ===============
+        /* ============= Insert data in database ============== */
+        if($request->file('profile_photo')){
+          /* ========= make Image ========= */
+          $image = $request->file('profile_photo');
+          $imageName = 'image'.'-'.$request->ID_Number.'-'.$image->getClientOriginalExtension();
+          Image::make($image)->resize(150,150)->save('uploads/employee/'.$imageName);
+          $profile_photo = 'uploads/employee/'.$imageName;
+          // ============ upload data in database =============
+          $uploadProfile = Employee::where('employee_id',$insert)->update([
+              'profile_photo' => $profile_photo,
+              'updated_at' => Carbon::now(),
+          ]);
+
+        }
+
+        if($request->file('nid_photo')){
+          /* ========= make Image ========= */
+          $image = $request->file('nid_photo');
+          $imageName = 'nid_image'.'-'.$request->ID_Number.'-'.$image->getClientOriginalExtension();
+          Image::make($image)->save('uploads/employee/'.$imageName);
+          $nid_photo = 'uploads/employee/'.$imageName;
+          // ============ upload data in database =============
+          $uploadNid = Employee::where('employee_id',$insert)->update([
+              'nid_photo' => $nid_photo,
+              'updated_at' => Carbon::now(),
+          ]);
+        }
         /* ============ Insert visa ============ */
         SalaryDetails::insert([
           'employee_id' => $insert,
@@ -160,11 +179,12 @@ class EmployeeController extends Controller
     }
 
     public function show($id){
-
+        $data = $this->findEmployee($id);
+        return view('admin.employee.view',compact('data'));
     }
 
     public function edit($id){
-        $data = $this->findCustomer($id);
+        $data = $this->findEmployee($id);
         $employeeId = $this->employeeId();
         $bloodGroup = $this->bloodGroup();
         $department = $this->department();
@@ -175,32 +195,24 @@ class EmployeeController extends Controller
 
     public function update(Request $request, $id){
         /* =============== Form Validation =============== */
+
         $this->validate($request,[
           'employee_name' => 'required|min:3|max:50',
           'employee_father' => 'required|min:3|max:50',
           'employee_mother' => 'required|min:3|max:50',
-
           'mobile_no' => 'required|unique:employees,mobile_no,'.$id.',employee_id',
-          'email' => 'required|unique:employees,email,'.$id.',employee_id',
           'nid' => 'required|unique:employees,nid,'.$id.',employee_id',
-
-
-          'customer_phone' => 'required|unique:customers,customer_phone,'.$id.',customer_id',
-
           'present_address' => 'required|max:250',
           'parmanent_address' => 'required|max:250',
           'date_of_birth' => 'required',
           'maritus_status' => 'required',
           'gender' => 'required',
           'joining_date' => 'required',
-          'confirmation_date' => 'required',
-          'appointment_date' => 'required',
           'designation_id' => 'required',
           'department_id' => 'required',
           'emp_type_id' => 'required',
         ]);
 
-        dd($request->all());
         // update data in database
         $update = Employee::where('employee_id',$id)->update([
           'ID_Number' => $request->ID_Number,
@@ -208,6 +220,7 @@ class EmployeeController extends Controller
           'employee_father' => $request->employee_father,
           'employee_mother' => $request->employee_mother,
           'mobile_no' => $request->mobile_no,
+          'email' => $request->email,
           'nid' => $request->nid,
           'blood_group_id' => $request->blood_group_id,
           'present_address' => $request->present_address,
@@ -216,8 +229,6 @@ class EmployeeController extends Controller
           'maritus_status' => $request->maritus_status,
           'gender' => $request->gender,
           'joining_date' => $request->joining_date,
-          'confirmation_date' => $request->confirmation_date,
-          'appointment_date' => $request->appointment_date,
           'designation_id' => $request->designation_id,
           'department_id' => $request->department_id,
           'emp_type_id' => $request->emp_type_id,
@@ -226,6 +237,34 @@ class EmployeeController extends Controller
           'updated_at' => Carbon::now(),
         ]);
 
+        /* ========= flash massege ========= */
+        Session::flash('success_update','value');
+        return redirect()->back();
+    }
+
+    public function nidPhotoUpdate(Request $request, $id){
+        if($request->file('nid_photo')){
+          if($request->old_nid_photo != ''){
+            unlink($request->old_nid_photo);
+          }
+          /* ========= make Image ========= */
+          $image = $request->file('nid_photo');
+          $imageName = 'nid-image'.'-'.$request->ID_Number.'-'.$image->getClientOriginalExtension();
+          Image::make($image)->save('uploads/employee/'.$imageName);
+          $nid_photo = 'uploads/employee/'.$imageName;
+
+          $update = Employee::where('employee_id',$id)->update([
+            'nid_photo' => $nid_photo,
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+
+        Session::flash('updateNidPhoto');
+        return redirect()->back();
+
+    }
+
+    public function profilePhotoUpdate(Request $request, $id){
         if($request->file('profile_photo')){
           if($request->old_profile_photo != ''){
             unlink($request->old_profile_photo);
@@ -242,15 +281,102 @@ class EmployeeController extends Controller
           ]);
         }
 
-        /* ========= flash massege ========= */
-        Session::flash('success_update','value');
+        Session::flash('updateProfilePhoto');
         return redirect()->back();
-        // return redirect()->route('employee.show',$id);
     }
 
-    public function employeeApprove(){
-      return "Comming Soon";
+    /* =============== Employee Advance Payment =============== */
+    public function advancePay(){
+      $employeeId = $this->getAllEmployeeId();
+      return view('admin.employee.advance.create',compact('employeeId'));
     }
+
+    public function advanceApplyEmployee(){
+      return $data = AdvancePay::leftjoin('employees','advance_pays.employee_id','=','employees.employee_id')
+                             ->leftjoin('salary_details','employees.employee_id','=','salary_details.employee_id')
+                             ->select(
+                               'salary_details.sdetails_id',
+                               'salary_details.basic_amount',
+                               'employees.employee_id',
+                               'employees.ID_Number',
+                               'employees.employee_name',
+                               'advance_pays.*'
+                               )->orderBy('id','DESC')->get();
+    }
+
+    public function advancePayList(){
+      $dataList = $this->advanceApplyEmployee();
+      return view('admin.employee.advance.index',compact('dataList'));
+    }
+
+    public function advancePaymentStore(Request $request){
+      $times = Carbon::now();
+
+      $countAdvancePay = AdvancePay::where('employee_id',$request->employee_id)->where('adv_month',$times->format('m'))->where('adv_year',$times->format('Y'))->count();
+
+      // dd($countAdvancePay);
+
+      if($countAdvancePay <= 2){
+        $store = AdvancePay::insert([
+          'employee_id' => $request->employee_id,
+          'adv_pay_amount' => $request->advance_pay,
+          'adv_pay_remarks' => $request->adv_pay_remarks,
+          'entry_date' => $times,
+          'adv_month' => $times->format('m'),
+          'adv_year' => $times->format('Y'),
+          'creator' => Auth::user()->id,
+          'created_at' => Carbon::now(),
+        ]);
+      }else{
+        Session::flash('limitCross');
+        return redirect()->back();
+      }
+
+
+
+      Session::flash('requestSend');
+      return redirect()->back();
+
+    }
+
+    public function advancePayDelete($id){
+      $delete = AdvancePay::where('status',0)->where('id',$id)->delete();
+      Session::flash('delete_success');
+      return redirect()->back();
+    }
+
+    /* =============== Employee Approve =============== */
+    public function pendingAdvancePay(){
+      $dataList = $this->advanceApplyEmployee();
+      return view('admin.employee.advance.administrator.index',compact('dataList'));
+    }
+
+    public function advancePayApprove($id){
+      $approve = AdvancePay::where('status',0)->where('id',$id)->update([
+        'status' => 1,
+        'approve_date' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      Session::flash('advance_approve_success');
+      return redirect()->back();
+    }
+
+
+    public function employeeApprove(){
+      $employees = $this->employeeInformation();
+      return view('admin.employee.administrator.index',compact('employees'));
+    }
+
+    public function employeeJob($id){
+        $approve = Employee::where('job_status','pending')->where('employee_id',$id)->update([
+          'job_status' => 'approve',
+          'updated_at' => Carbon::now(),
+        ]);
+        Session::flash('employee_approve_success');
+        return redirect()->back();
+    }
+
+
 
 
 

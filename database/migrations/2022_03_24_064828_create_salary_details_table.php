@@ -17,11 +17,8 @@ class CreateSalaryDetailsTable extends Migration
             $table->id('sdetails_id');
             $table->unsignedBigInteger('employee_id');
             $table->integer('basic_amount')->default(0);
-            $table->integer('house_rent')->default(0);
             $table->integer('mobile_allowance')->default(0);
-            $table->integer('medical_allowance')->default(0);
-            $table->integer('local_travel_allowance')->default(0);
-            $table->integer('conveyance_allowance')->default(0);
+            $table->integer('others_allowance')->default(0);
             $table->integer('increment_no')->default(0);
             $table->float('increment_amount',11,2)->default(0);
             // $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');

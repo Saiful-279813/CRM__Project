@@ -42,6 +42,28 @@ $(document).on("click", "#confirm", function(e){
     });
 });
 
+$(document).on("click", "#approve", function(e){
+    e.preventDefault();
+    var link = $(this).attr("href");
+
+    swal({
+        title: "Are you sure To This Income Approve?",
+        // text: "Once Confirm, you will not go Back Step Again!",
+        icon: "info",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            window.location.href = link;
+
+        } else {
+            // swal("Not Confirm!");
+        }
+
+    });
+});
+
 $(document).on("click", "#sale", function(e){
     e.preventDefault();
     var link = $(this).attr("href");

@@ -93,7 +93,7 @@
                     <label class="col-sm-4 col-form-label col_form_label">Income Date:<span class="req_star">*</span></label>
                     <div class="col-sm-5">
                         <div class="input-group">
-                            <input type="text" class="form-control form_control" id="birththday" name="date" value="">
+                            <input type="text" class="form-control form_control" id="birththday" name="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                             </div>

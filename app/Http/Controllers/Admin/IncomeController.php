@@ -109,10 +109,28 @@ class IncomeController extends Controller
         return redirect()->route('income.index');
     }
 
-    public function incomeApprove(){
-      return "Comming Soon.....";
+    public function pendingIncome(){
+      $pendingIncome = Income::where('incomes.income_status',0)
+                      ->leftjoin('income_categories','incomes.in_cat_id','=','income_categories.in_cat_id')
+                      ->select('incomes.*','income_categories.in_cat_name')
+                      ->orderBy('income_id','DESC')->get();
+      return view('admin.pending.income',compact('pendingIncome'));
     }
 
+    public function approveIncome($income_id){
+      $approve = Income::where('income_status',0)->where('income_id',$income_id)->update([
+        'income_status' => 1,
+        'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
+      ]);
+      Session::flash('approve');
+      return redirect()->back();
+    }
+
+    public function deleteIncome($income_id){
+      $delete = Income::where('income_status',0)->where('income_id',$income_id)->delete();
+      Session::flash('delete');
+      return redirect()->back();
+    }
 
 
 }

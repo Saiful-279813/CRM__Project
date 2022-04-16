@@ -111,8 +111,27 @@ class ExpenseController extends Controller
     }
 
 
-    public function expenseApprove(){
-      return "Comming Soon";
+    public function pendingExpense(){
+      $pendingExpense = Expanse::where('expanses.expens_status',0)
+                              ->leftjoin('expanse_categories','expanses.exp_cat_id','=','expanse_categories.exp_cat_id')
+                              ->select('expanses.*','expanse_categories.exp_cat_name')
+                              ->orderBy('expens_id','DESC')->get();
+      return view('admin.pending.expens',compact('pendingExpense'));
+    }
+
+    public function approveExpense($id){
+        $approve = Expanse::where('expens_status',0)->where('expens_id',$id)->update([
+          'expens_status' => 1,
+          'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        ]);
+        Session::flash('approve');
+        return redirect()->back();
+    }
+
+    public function deleteIncome($id){
+        $delete = Expanse::where('expens_status',0)->where('expens_id',$id)->delete();
+        Session::flash('delete');
+        return redirect()->back();
     }
 
 

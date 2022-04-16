@@ -18,9 +18,11 @@
                         {{-- Employee Type --}}
                         <li><a class="@yield('employee-type')" href="{{ route('employee-type.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Type </a></li>
                         {{-- ================== Approval ================== --}}
-                        <li><a class="@yield('income-approve')" href="{{ route('income-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Income Approve </a></li>
+                        <li><a class="@yield('pending-income')" href="{{ route('pending-income') }}"> <i class="fas fa-arrow-right sm child_i"></i> Pending Income </a></li>
 
-                        <li><a class="@yield('expense-approve')" href="{{ route('expense-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Expense Approve </a></li>
+                        <li><a class="@yield('pending-expense')" href="{{ route('pending-expense') }}"> <i class="fas fa-arrow-right sm child_i"></i> Pending Expense </a></li>
+
+                        <li><a class="@yield('pending-advance-pay')" href="{{ route('pending-advance-pay') }}"> <i class="fas fa-arrow-right sm child_i"></i> Pending Advance Payment </a></li>
 
                         <li><a class="@yield('employee-approve')" href="{{ route('employee-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Approve </a></li>
                         {{-- ================== Approval ================== --}}
@@ -54,8 +56,12 @@
                 <li class="@yield('employee')"><a href="#" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Employee</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('addEmployee')" href="{{ route('employee.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Add New Employee </a></li>
-                        <li><a class="@yield('addEmployee')" href="{{ route('employee.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee List </a></li>
+                        <li><a class="@yield('listEmployee')" href="{{ route('employee.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee List </a></li>
                         <li><a class="@yield('salary')" href="{{ route('salary.index') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Salary </a></li>
+                        {{-- employee advance payment --}}
+                        <li><a class="@yield('advancePay')" href="{{ route('employee-advance-pay') }}"> <i class="fas fa-arrow-right sm child_i"></i> Advance Pay </a></li>
+                        {{-- employee Commision --}}
+                        <li><a class="@yield('commision')" href="{{ route('commision.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Commision </a></li>
                     </ul>
                 </li>
 

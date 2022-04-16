@@ -1,4 +1,6 @@
 @extends('layouts.admin')
+@section('employee') active mm-active @endsection
+@section('listEmployee') active @endsection
 @section('content')
   {{-- breadcrumb --}}
   <div class="row">
@@ -30,6 +32,21 @@
             </div>
           @endif
 
+          @if(Session::has('updateNidPhoto'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Save & Change Nid Copy.
+            </div>
+          @endif
+
+          @if(Session::has('updateProfilePhoto'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Save & Change Profile Photo.
+            </div>
+          @endif
+
+
+
+
           @if(Session::has('error'))
             <div class="alert alert-warning alerterror" role="alert">
                <strong>Opps!</strong> please try again.
@@ -48,7 +65,7 @@
             <div class="card-header custom-card-header">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3 class="card-title card_top_title"><i class="fab fa-gg-circle"></i> Create New Employee</h3>
+                        <h3 class="card-title card_top_title"><i class="fab fa-gg-circle"></i> Edit Employee Information</h3>
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="{{ route('employee.index') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-th"></i> All Employee List </a>
@@ -69,7 +86,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Name" class="form-control" name="employee_name" value="{{ $data->employee_name }}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Name" class="form-control" name="employee_name" value="{{ $data->employee_name }}" required>
                           @error('employee_name')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -81,7 +98,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Father Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Father Name" class="form-control" name="employee_father" value="{{ $data->employee_father }}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Father Name" class="form-control" name="employee_father" value="{{ $data->employee_father }}" required>
                           @error('employee_father')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -90,7 +107,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Mother Name:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Mother Name" class="form-control" name="employee_mother" value="{{ $data->employee_mother }}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Mother Name" class="form-control" name="employee_mother" value="{{ $data->employee_mother }}" required>
                           @error('employee_mother')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -102,7 +119,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class=" control-label">Mobile Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Phone" class="form-control" name="mobile_no" value="{{ $data->mobile_no }}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[11,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Phone" class="form-control" name="mobile_no" value="{{ $data->mobile_no }}" required>
                           @error('mobile_no')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -112,7 +129,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Email Address:</label>
                       <div class="">
-                          <input type="email" placeholder="Email" class="form-control" name="email" value="{{ $data->email }}" data-parsley-length="[10,50]" data-parsley-trigger="keyup">
+                          <input type="email" placeholder="Email" class="form-control" name="email" value="{{ $data->email }}">
                       </div>
                   </div>
                 </div>
@@ -121,7 +138,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">NID Number:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="NID Number" class="form-control" name="nid" value="{{ $data->nid }}" required data-parsley-pattern="[0-9]+$" data-parsley-length="[1,15]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="NID Number" class="form-control" name="nid" value="{{ $data->nid }}" required>
                           @error('nid')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -148,7 +165,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Present Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Present Address" class="form-control" name="present_address" value="{{ $data->present_address }}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,50]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Present Address" class="form-control" name="present_address" value="{{ $data->present_address }}" required>
                           @error('present_address')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -157,7 +174,7 @@
                   <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Permanent Address:<span class="req_star">*</span></label>
                       <div class="">
-                          <input type="text" placeholder="Permanent Address" class="form-control" name="parmanent_address" value="{{ $data->parmanent_address }}" required data-parsley-pattern="[a-zA-Z_ ]+$" data-parsley-length="[3,200]" data-parsley-trigger="keyup">
+                          <input type="text" placeholder="Permanent Address" class="form-control" name="parmanent_address" value="{{ $data->parmanent_address }}" required>
                           @error('parmanent_address')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
@@ -215,21 +232,6 @@
 
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Confirm Date:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="date" class="form-control" name="confirmation_date" value="{{ $data->confirmation_date }}">
-                      </div>
-                  </div>
-                  <div class="form-group custom_form_group col-md-6">
-                      <label class="control-label">Appointment Date:<span class="req_star">*</span></label>
-                      <div class="">
-                          <input type="date" class="form-control" name="appointment_date" value="{{ $data->appointment_date }}">
-                      </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group custom_form_group col-md-6">
                       <label class="control-label">Designation:<span class="req_star">*</span></label>
                       <div class="">
                           <select class="form-control search_select" name="designation_id" id="search_select2" required>
@@ -276,30 +278,6 @@
                       </div>
                   </div>
                 </div>
-
-                <div class="row" style="margin-top:10px">
-                  <div class="col-md-3"></div>
-                  <div class="form-group col-md-5 mb-3">
-                    <label class="col-form-label col_form_label">Photo:</label>
-                    <div class="">
-                      <div class="input-group">
-                          <span class="input-group-btn">
-                              <span class="btn btn-default btn-file btnu_browse">
-                                  Browse… <input type="file" name="profile_photo" id="imgInp">
-                              </span>
-                          </span>
-                          <input type="text" class="form-control" readonly>
-                      </div>
-                      <img id="img-upload"/>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <img src="{{ asset($data->profile_photo) }}" alt="" width="150">
-                    <input type="hidden" name="old_profile_photo" value="{{ $data->profile_photo }}">
-                  </div>
-                </div>
-
-
             </div>
 
               <div class="card-footer card_footer_button text-center">
@@ -310,7 +288,73 @@
         </form>
     </div>
   </div>
-  {{-- main work --}}
+  {{-- Image part --}}
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body card_form">
+            {{-- Image --}}
+            <div class="row">
+              <div class="form-group custom_form_group col-md-4">
+                <form class="" action="{{ route('employee-profile-photo.change',$data->employee_id) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                  <input type="hidden" name="old_profile_photo" value="{{ $data->profile_photo }}">
+                  <div class="show_image">
+                    <img src="{{ asset($data->profile_photo) }}" style="width:100%; height: 150px; border:1px solid #ddd;" alt="">
+                  </div>
+                  <hr>
+                  <label class=" control-label">Profile Photo:<span class="req_star">*</span></label>
+                  <div class="row">
+                      {{-- do work --}}
+                      <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file btnu_browse">
+                                    Browse… <input type="file" name="profile_photo" id="imgInp">
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                        <img id="img-upload"/>
+                      </div>
+                      {{-- do work --}}
+                  </div>
+                  <button type="submit" class="btn btn-primary waves-effect mt-2">SAVE & CHANGE</button>
+                </form>
+              </div>
+              <div class="form-group custom_form_group col-md-4">
+                <form class="" action="{{ route('employee-nid-photo.change',$data->employee_id) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                  <input type="hidden" name="old_nid_photo" value="{{ $data->nid_photo }}">
+                  <div class="show_image">
+                    <img src="{{ asset($data->nid_photo) }}" style="width:100%; height: 150px; border:1px solid #ddd;" alt="">
+                  </div>
+                  <hr>
+                  <label class=" control-label">NID Copy:<span class="req_star">*</span></label>
+                  <div class="row">
+                      {{-- do work --}}
+                      <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file btnu_browse">
+                                    Browse… <input type="file" name="nid_photo" onchange="nidUrl(this)">
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                        <img src="" id="nidShow" style="margin-top:10px">
+                      </div>
+                      {{-- do work --}}
+                  </div>
+                  <button type="submit" class="btn btn-primary waves-effect mt-2">SAVE & CHANGE</button>
+                </form>
+              </div>
+            </div>
+            {{-- Image --}}
+          </div>
+          {{-- visa information --}}
+      </div>
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -319,6 +363,20 @@
       $(document).ready(function() {
           $('#customerForm').parsley();
       });
+
+      function nidUrl(input){
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e){
+              $('#nidShow').attr('src',e.target.result).width(150)
+                    .height(150);
+          };
+          reader.readAsDataURL(input.files[0]);
+
+
+        }
+      }
       /* ================ do work ================ */
     </script>
 @endsection

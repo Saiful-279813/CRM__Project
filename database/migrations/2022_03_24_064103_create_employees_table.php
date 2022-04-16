@@ -40,7 +40,7 @@ class CreateEmployeesTable extends Migration
             $table->date('appointment_date')->nullable();
             /* ============= image collection ============= */
             $table->string('profile_photo',60)->nullable();
-            $table->string('employee_appoint_latter',60)->nullable();
+            $table->string('nid_photo',60)->nullable();
             /* ============= image collection ============= */
             $table->enum('job_status',['pending','approve','leave','reject'])->default('pending');
             $table->unsignedBigInteger('employee_creator');
