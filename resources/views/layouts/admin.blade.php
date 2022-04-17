@@ -92,6 +92,7 @@
             $('#search_select2').select2();
             $('#search_select3').select2();
             $('#search_select4').select2();
+            $('#search_select5').select2();
           });
         </script>
         <!-- form validation -->

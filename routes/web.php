@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SalaryController;
+use App\Http\Controllers\Admin\SalaryGenerateController;
 use App\Http\Controllers\Admin\IncomeCategoryController;
 use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\ExpenseCategoryController;
@@ -112,10 +113,15 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- Employee Commision ------------------
     Route::resource('commision', ComissionController::class);
     Route::get('employee-commision/{id}/delete', [ComissionController::class, 'delete'])->name('commision.delete');
+    // ---------------- pending commmistion ----------------
+    Route::get('pending-commision/list', [ComissionController::class, 'pendingCommision'])->name('pending-commision');
+    Route::get('employee-commision/{id}/approve', [ComissionController::class, 'commisionApprove'])->name('commision.approve');
     // --------------- Employee Commision ------------------
 
 
     // --------------- Salary Details ------------------
+
+    Route::get('salary/generat', [SalaryGenerateController::class, 'index'])->name('salary-generate');
     Route::resource('salary', SalaryController::class);
     // --------------- Salary Details ------------------
 

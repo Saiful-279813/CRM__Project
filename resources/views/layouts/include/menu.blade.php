@@ -24,6 +24,8 @@
 
                         <li><a class="@yield('pending-advance-pay')" href="{{ route('pending-advance-pay') }}"> <i class="fas fa-arrow-right sm child_i"></i> Pending Advance Payment </a></li>
 
+                        <li><a class="@yield('pending-commision')" href="{{ route('pending-commision') }}"> <i class="fas fa-arrow-right sm child_i"></i> Pending Commision </a></li>
+
                         <li><a class="@yield('employee-approve')" href="{{ route('employee-approve') }}"> <i class="fas fa-arrow-right sm child_i"></i> Employee Approve </a></li>
                         {{-- ================== Approval ================== --}}
                     </ul>
@@ -43,7 +45,7 @@
                     </ul>
                 </li>
                 {{-- accounts & Finance --}}
-                <li class="@yield('customer')"><a href="#" class="waves-effect"><i class="bx bx-happy-alt"></i><span>Customers</span></a>
+                <li class="@yield('customer')"><a href="#" class="waves-effect"><i class='bx bx-street-view'></i><span>Customers</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('addCustomer')" href="{{ route('customers.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Add Customer </a></li>
                         {{-- list customer --}}
@@ -62,6 +64,12 @@
                         <li><a class="@yield('advancePay')" href="{{ route('employee-advance-pay') }}"> <i class="fas fa-arrow-right sm child_i"></i> Advance Pay </a></li>
                         {{-- employee Commision --}}
                         <li><a class="@yield('commision')" href="{{ route('commision.create') }}"> <i class="fas fa-arrow-right sm child_i"></i> Commision </a></li>
+                    </ul>
+                </li>
+                {{-- salary System --}}
+                <li class="@yield('salary')"><a href="#" class="waves-effect"><i class='bx bxs-wallet-alt'></i><span>Salary System</span></a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a class="@yield('salaryGenerate')" href="{{ route('salary-generate') }}"> <i class="fas fa-arrow-right sm child_i"></i> Salary Generat </a></li>
                     </ul>
                 </li>
 

@@ -29,6 +29,7 @@ class ComissionController extends Controller
                                'employees.employee_name',
                                'commisions.id',
                                'commisions.commision_amount',
+                               'commisions.entry_date',
                                'commisions.remarks',
                                'commisions.status',
                                )->orderBy('id','DESC')->get();
@@ -81,13 +82,6 @@ class ComissionController extends Controller
         return view('admin.commision.edit',compact('employeeId','data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -113,16 +107,26 @@ class ComissionController extends Controller
         return redirect()->route('commision.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $data = Commision::where('id',$id)->delete();
         Session::flash('delete_success');
         return redirect()->route('commision.index');
     }
+
+    // ============= Pending Commision ==================
+    public function pendingCommision(){
+      $dataList = $this->commision();
+      return view('admin.commision.administrator.index',compact('dataList'));
+    }
+
+    public function commisionApprove($id){
+        $data = Commision::where('status',0)->where('id',$id)->update([
+          'status' => 1,
+          'updated_at' => Carbon::now(),
+        ]);
+        Session::flash('approve_success');
+        return redirect()->back();
+    }
+    // ============= Pending Commision ==================
 }

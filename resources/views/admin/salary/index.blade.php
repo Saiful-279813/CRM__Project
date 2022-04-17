@@ -53,7 +53,7 @@
                                     <tr>
                                       <th>No</th>
                                       <th>Employee</th>
-                                      <th>Basic Amount</th>
+                                      <th>Salary</th>
                                       <th>Increment</th>
                                       <th>Increment Amount</th>
                                       <th>Action</th>
@@ -65,7 +65,10 @@
                                    <tr>
                                      <td> {{ $loop->iteration }} </td>
                                      <td> {{ $data->ID_Number }} <br> {{ $data->employee_name }} </td>
-                                     <td>{{ $data->basic_amount }}</td>
+                                     <td>
+                                       {{ $data->basic_amount }}(Basic Salary) <br>
+                                       {{ $data->total_salary }}(Total Salary) <br>
+                                     </td>
                                      <td>{{ $data->increment_no }}</td>
                                      <td>{{ $data->increment_amount }}</td>
                                      <td style="width:17%">

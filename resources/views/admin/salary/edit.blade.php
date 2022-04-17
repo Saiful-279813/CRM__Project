@@ -71,6 +71,7 @@
                       </div>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Moblie Allowance:</label>
@@ -82,6 +83,31 @@
                       </div>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">Medical Allowance:</label>
+                      <div class="">
+                          <input type="text" placeholder="Amount" class="form-control" name="medical_allowance" value="{{ $data->medical_allowance }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,7]" data-parsley-trigger="keyup">
+                          @error('medical_allowance')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group custom_form_group col-md-6 m-auto">
+                      <label class="control-label">House Allowance:</label>
+                      <div class="">
+                          <input type="text" placeholder="Amount" class="form-control" name="house_allowance" value="{{ $data->house_allowance }}" required data-parsley-pattern="[0-9]+$" min="0" data-parsley-length="[1,7]" data-parsley-trigger="keyup">
+                          @error('house_allowance')
+                          <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                  </div>
+                </div>
+
                 <div class="row">
                   <div class="form-group custom_form_group col-md-6 m-auto">
                       <label class="control-label">Othes Allowance:</label>

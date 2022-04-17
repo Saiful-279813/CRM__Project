@@ -48,13 +48,19 @@ class SalaryController extends Controller
         $request->validate([
           'basic_amount' => 'required|numeric',
           'mobile_allowance' => 'required|numeric',
+          'medical_allowance' => 'required|numeric',
+          'house_allowance' => 'required|numeric',
           'others_allowance' => 'required|numeric',
         ]);
+        $total_salary = ($request->basic_amount + $request->mobile_allowance + $request->medical_allowance + $request->house_allowance + $request->others_allowance);
         /* =============== Insert Data in database =============== */
         $update = SalaryDetails::where('sdetails_id',$id)->update([
           'basic_amount' => $request->basic_amount,
           'mobile_allowance' => $request->mobile_allowance,
+          'medical_allowance' => $request->medical_allowance,
+          'house_allowance' => $request->house_allowance,
           'others_allowance' => $request->others_allowance,
+          'total_salary' => $total_salary,
           'updated_at' => Carbon::now(),
         ]);
         Session::flash('save_and_change');
