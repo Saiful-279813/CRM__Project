@@ -105,8 +105,8 @@ class AdminController extends Controller{
          // ========= make image =========
          $image = $request->file('image');
          $imageName = 'user-image'.'-'.uniqid().'-'.$image->getClientOriginalExtension();
-         Image::make($image)->resize(100,100)->save('uploads/user/'.$imageName);
-         $saveUrl = 'uploads/user/'.$imageName;
+         Image::make($image)->resize(100,100)->save('uploads/users/'.$imageName);
+         $saveUrl = 'uploads/users/'.$imageName;
          // ========= make image =========
          User::findOrFail(Auth::id())->update([
            'upload_photo_path' => $saveUrl,

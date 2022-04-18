@@ -30,7 +30,7 @@ class EmployeeController extends Controller
     }
 
     public function getAllEmployeeId(){
-      return $data = Employee::where('job_status','approve')->orderBy('employee_id','DESC')->select('employee_id','ID_Number')->get();
+      return $data = Employee::where('job_status','approve')->orderBy('employee_id','DESC')->select('employee_id','ID_Number','employee_name')->get();
     }
 
     public function findEmployee($id){

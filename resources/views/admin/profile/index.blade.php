@@ -97,7 +97,6 @@
                             </span>
                         @endif
                       </div>
-
                   </div>
 
                   <div class="form-group row custom_form_group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -204,17 +203,17 @@
                 <div class="card-body card_form">
 
                   <div class="form-group row custom_form_group">
-                      <label class="col-sm-3 control-label">Banner Image:<span class="req_star">*</span></label>
+                      <label class="col-sm-3 control-label">Profile Image:<span class="req_star">*</span></label>
                       <div class="col-sm-4">
                         <div class="input-group mb-2">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file btnu_browse">
-                                    Browse… <input type="file" name="image" id="imgInp3" accept="image/x-png,image/gif,image/jpeg" onchange="mainThambUrl(this)" required="Please Chose Image">
+                                    Browse… <input type="file" name="image" id="imgInp" accept="image/x-png,image/gif,image/jpeg">
                                 </span>
                             </span>
                             <input type="text" class="form-control" readonly>
                         </div>
-                        <img src="" id="mainThmb">
+                        <img id="img-upload" style="margin-top:10px"/>
                       </div>
                       <div class="col-md-3">
                         <img src="{{ asset(Auth::user()->upload_photo_path) }}" alt="No Image" width="150" height="150">

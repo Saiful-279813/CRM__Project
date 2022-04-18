@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\EmployeeTypeController;
 use App\Http\Controllers\Admin\SearchController;
+use App\Http\Controllers\Admin\MonthWorkHistoryController;
 use App\Http\Controllers\Admin\SalaryController;
 use App\Http\Controllers\Admin\SalaryGenerateController;
 use App\Http\Controllers\Admin\IncomeCategoryController;
@@ -119,9 +120,14 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- Employee Commision ------------------
 
 
-    // --------------- Salary Details ------------------
+    // --------------- Month Work history ------------------
+    Route::resource('month-work', MonthWorkHistoryController::class);
+    // --------------- Month Work history ------------------
 
+
+    // --------------- Salary Details ------------------
     Route::get('salary/generat', [SalaryGenerateController::class, 'index'])->name('salary-generate');
+    Route::post('all-employee/salary/process', [SalaryGenerateController::class, 'allEmployeeSalaryProcess'])->name('all-employee-salary-process');
     Route::resource('salary', SalaryController::class);
     // --------------- Salary Details ------------------
 

@@ -36,7 +36,7 @@
   {{-- main work --}}
   <div class="row">
     <div class="col-lg-12">
-        <form class="form-horizontal" method="post" action="#" enctype="multipart/form-data" id="customerForm">
+        <form class="form-horizontal" method="post" action="{{ route('all-employee-salary-process') }}" enctype="multipart/form-data" id="customerForm">
           @csrf
           <div class="card">
             <div class="card-header custom-card-header">

@@ -26,6 +26,17 @@ class SalaryGenerateController extends Controller
       return $totalFiveYear;
     }
 
+    public function twoyears(){
+      $current_year = Carbon::now()->format('Y');
+      $totalFiveYear = [];
+      array_push($totalFiveYear, (int)$current_year);
+      for ($i=2; $i > 1 ; $i--) {
+          $current_year = $current_year-1 ;
+        array_push($totalFiveYear, $current_year);
+      }
+      return $totalFiveYear;
+    }
+
     public function employeeId(){
       $employeeOBJ = new EmployeeController();
       return $employeeId = $employeeOBJ->getAllEmployeeId();
@@ -36,7 +47,14 @@ class SalaryGenerateController extends Controller
       $months = $this->months();
       $years = $this->years();
       $employeeId = $this->employeeId();
-      dd($employeeId);
       return view('admin.salary_generat.index',compact('employeeId','months','years'));
     }
+
+    // ==================== Salary Process ======================
+    public function allEmployeeSalaryProcess(Request $request){
+      dd($request->all());
+    }
+
+
+
 }
