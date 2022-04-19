@@ -27,7 +27,22 @@ class MonthWorkHistoryController extends Controller
       return $obj = new SalaryGenerateController;
     }
 
+    public function getAll(){
+      return $data = MonthWorkHistory::leftjoin('employees','month_work_histories.employee_id','=','employees.employee_id')
+                                      ->leftjoin('months','month_work_histories.month_id','=','months.month_id')
+                                      ->select(
+                                        'employees.ID_Number',
+                                        'employees.employee_name',
+                                        'months.month_name',
+                                        /* Month Work */
+                                        'month_work_histories.*'
+                                        )
+                                      ->orderBy('month_work_id','DESC')->get();
+    }
 
+    public function findData($id){
+      return $data = MonthWorkHistory::where('month_work_id',$id)->first();
+    }
 
     /*
     ===================================
@@ -37,20 +52,11 @@ class MonthWorkHistoryController extends Controller
 
     public function index()
     {
+        $mothWorkList = $this->getAll();
         $months = $this->salaryGenerateOBJ()->months();
         $years = $this->salaryGenerateOBJ()->twoyears();
         $employeeId = $this->employeeId();
-        return view('admin.month_work.index',compact('employeeId','months','years'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('admin.month_work.index',compact('employeeId','months','years','mothWorkList'));
     }
 
     public function store(Request $request)
@@ -89,48 +95,47 @@ class MonthWorkHistoryController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $data = $this->findData($id);
+        $months = $this->salaryGenerateOBJ()->months();
+        $years = $this->salaryGenerateOBJ()->twoyears();
+        $employeeId = $this->employeeId();
+        return view('admin.month_work.edit',compact('employeeId','months','years','data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        // ========== validation ==========
+        $request->validate([
+          'employee_id' => 'required',
+          'month_name' => 'required',
+          'year' => 'required',
+          'overtime_amount' => 'required|numeric',
+          'deduction_amount' => 'required|numeric',
+          'total_work_day' => 'required|numeric|max:30',
+        ]);
+        // ========= insert data in database ===========
+        $update = MonthWorkHistory::where('month_work_id',$id)->update([
+          'employee_id' => $request->employee_id,
+          'month_id' => $request->month_name,
+          'year' => $request->year,
+          'overtime_amount' => $request->overtime_amount,
+          'deduction_amount' => $request->deduction_amount,
+          'total_work_day' => $request->total_work_day,
+          'create_by' => Auth::user()->id,
+          'updated_at' => Carbon::now(),
+        ]);
+        // ========= insert data in database ===========
+        Session::flash('success_update');
+        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function delete($id){
+      $delete = MonthWorkHistory::where('status',0)->where('month_work_id',$id)->delete();
+      Session::flash('success_delete');
+      return redirect()->back();
     }
+    /* ============ Approve section ============ */
+
 }

@@ -122,6 +122,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
 
     // --------------- Month Work history ------------------
     Route::resource('month-work', MonthWorkHistoryController::class);
+    Route::get('month-work/{month_work_id}/delete', [MonthWorkHistoryController::class, 'delete'])->name('month-work.delete');
     // --------------- Month Work history ------------------
 
 

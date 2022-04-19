@@ -30,6 +30,13 @@
                <strong>Opps!</strong> please try again.
             </div>
           @endif
+
+          @if(Session::has('salary_report_not_assigned'))
+            <div class="alert alert-warning alerterror" role="alert">
+               <strong>Opps!</strong> This Month Not Assigned Salary Report In Monthly Work History.
+            </div>
+          @endif
+
       </div>
       <div class="col-md-2"></div>
   </div>
