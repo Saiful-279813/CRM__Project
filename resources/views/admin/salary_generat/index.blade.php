@@ -25,6 +25,12 @@
             </div>
           @endif
 
+          @if(Session::has('success_store_salary_history'))
+            <div class="alert alert-success alertsuccess" role="alert">
+               <strong>Successfully!</strong> Processing In Salary.
+            </div>
+          @endif
+
           @if(Session::has('error'))
             <div class="alert alert-warning alerterror" role="alert">
                <strong>Opps!</strong> please try again.
@@ -96,7 +102,8 @@
     </div>
   </div>
   {{-- Single Employee --}}
-  <div class="row">
+
+  {{-- <div class="row">
     <div class="col-lg-12">
         <form class="form-horizontal" method="post" action="#" enctype="multipart/form-data" id="customerForm">
           @csrf
@@ -162,9 +169,9 @@
               </div>
           </div>
           {{-- visa form --}}
-        </form>
-    </div>
-  </div>
+        {{-- </form> --}}
+    {{-- </div> --}}
+  {{-- </div> --}}
   {{-- main work --}}
 @endsection
 

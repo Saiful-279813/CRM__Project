@@ -12,6 +12,7 @@ use App\Models\Commision;
 use App\Models\AdvancePay;
 use App\Models\Month;
 use Carbon\Carbon;
+use Session;
 
 class SalaryGenerateController extends Controller
 {
@@ -60,11 +61,10 @@ class SalaryGenerateController extends Controller
       /* ==================== Check Month Work History ==================== */
       $checkMonthWorkHistory = MonthWorkHistory::where('month_id',$request->month_name)->where('year',$request->year)->select('month_work_id','employee_id','month_id','year','overtime_amount','deduction_amount','total_work_day')->get();
 
-      dd($checkMonthWorkHistory);
+      // dd($checkMonthWorkHistory);
 
 
-      if($checkMonthWorkHistory != ''){
-        return "ok";
+      if(!$checkMonthWorkHistory->isEmpty()){
         // ========================
         foreach ($checkMonthWorkHistory as $monthWork) {
 
@@ -86,12 +86,71 @@ class SalaryGenerateController extends Controller
           ======================================
           */
           if($checkSalaryHistory){
+            /* =================== Update =================== */
+            $update = SalaryHistory::where('employee_id',$monthWork->employee_id)->where('slh_month',$request->month_name)->where('slh_year',$request->year)->update([
+              //================ Data ================
+              'employee_id' => $monthWork->employee_id,
+              'basic_amount' => $salary_details->basic_amount,
+              'mobile_allowance' => $salary_details->mobile_allowance,
+              'medical_allowance' => $salary_details->medical_allowance,
+              'house_allowance' => $salary_details->house_allowance,
+              'others_allowance' => $salary_details->others_allowance,
+              'total_salary' => $salary_details->total_salary,
+              'increment_no' => $salary_details->increment_no,
+              'increment_amount' => $salary_details->increment_amount,
 
+              'slh_overtime_amount' => $monthWork->overtime_amount,
+              'slh_total_working_days' => $monthWork->total_work_day,
+              'deduction_amount' => $monthWork->deduction_amount,
+
+              'slh_advance' => $advance_count,
+              'slh_advance_amount' => $advance_payment,
+
+              'slh_commision' => $commision_count,
+              'slh_commision_amount' => $commision_amount,
+
+              'slh_salary_date' => Carbon::now(),
+              'slh_month' => $request->month_name,
+              'slh_year' => $request->year,
+              'updated_at' => Carbon::now(),
+              //================ Data ================
+            ]);
+            /* =================== Update =================== */
           }else{
+            /* =================== Insert =================== */
+            $insert = SalaryHistory::insert([
+              //================ Data ================
+              'employee_id' => $monthWork->employee_id,
+              'basic_amount' => $salary_details->basic_amount,
+              'mobile_allowance' => $salary_details->mobile_allowance,
+              'medical_allowance' => $salary_details->medical_allowance,
+              'house_allowance' => $salary_details->house_allowance,
+              'others_allowance' => $salary_details->others_allowance,
+              'total_salary' => $salary_details->total_salary,
+              'increment_no' => $salary_details->increment_no,
+              'increment_amount' => $salary_details->increment_amount,
 
+              'slh_overtime_amount' => $monthWork->overtime_amount,
+              'slh_total_working_days' => $monthWork->total_work_day,
+              'deduction_amount' => $monthWork->deduction_amount,
+
+              'slh_advance' => $advance_count,
+              'slh_advance_amount' => $advance_payment,
+
+              'slh_commision' => $commision_count,
+              'slh_commision_amount' => $commision_amount,
+
+              'slh_salary_date' => Carbon::now(),
+              'slh_month' => $request->month_name,
+              'slh_year' => $request->year,
+              'updated_at' => Carbon::now(),
+              //================ Data ================
+            ]);
+            /* =================== Insert =================== */
           }
-
         }
+        Session::flash('success_store_salary_history');
+        return redirect()->back();
         // ========================
       }else{
         Session::flash('salary_report_not_assigned');
@@ -100,6 +159,66 @@ class SalaryGenerateController extends Controller
 
 
     }
+
+    /* ================== Salary Report ================== */
+    public function salaryReport(){
+      $months = $this->months();
+      $years = $this->years();
+      $employeeId = $this->employeeId();
+      $dataList = array();
+      return view('admin.salary_generat.report',compact('employeeId','months','years', 'dataList'));
+    }
+
+    public function salaryReportProcess(Request $request){
+      $dataList = SalaryHistory::where('slh_month',$request->month_name)
+                               ->where('slh_year',$request->year)
+                               ->leftjoin('employees','salary_histories.employee_id','=','employees.employee_id')
+                               ->select(
+                                 'employees.ID_Number',
+                                 'employees.employee_name',
+                                 'employees.profile_photo',
+                                 /* Salary History */
+                                 'salary_histories.slh_auto_id',
+                                 'salary_histories.basic_amount',
+                                 'salary_histories.total_salary',
+                                 'salary_histories.slh_overtime_amount',
+                                 'salary_histories.slh_total_working_days',
+                                 'salary_histories.deduction_amount',
+                                 'salary_histories.slh_advance',
+                                 'salary_histories.slh_advance_amount',
+                                 'salary_histories.slh_commision',
+                                 'salary_histories.slh_commision_amount',
+                                 )
+                               ->get();
+      return redirect()->back()->with(['dataList' => $dataList]);
+    }
+    /* =============== salary report view =============== */
+    public function getSalaryData($id){
+      return $dataList = SalaryHistory::where('slh_auto_id',$id)
+                               ->leftjoin('employees','salary_histories.employee_id','=','employees.employee_id')
+                               ->leftjoin('months','salary_histories.slh_month','=','months.month_id')
+                               ->select(
+                                 'employees.ID_Number',
+                                 'employees.employee_name',
+                                 'employees.profile_photo',
+                                 'months.month_name',
+                                 /* Salary History */
+                                 'salary_histories.*',
+                                 )
+                               ->first();
+    }
+
+    public function salaryReportView($id){
+      $data = $this->getSalaryData($id);
+      // dd($data);
+      return view('admin.salary_generat.report_view',compact('data'));
+    }
+    /* =============== salary report download =============== */
+    public function salaryReportDownload($id){
+      $data = $this->getSalaryData($id);
+    }
+
+
 
 
 

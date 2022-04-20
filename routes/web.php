@@ -129,6 +129,10 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth']], function(){
     // --------------- Salary Details ------------------
     Route::get('salary/generat', [SalaryGenerateController::class, 'index'])->name('salary-generate');
     Route::post('all-employee/salary/process', [SalaryGenerateController::class, 'allEmployeeSalaryProcess'])->name('all-employee-salary-process');
+    Route::get('all-employee/salary/report', [SalaryGenerateController::class, 'salaryReport'])->name('salary-report');
+    Route::post('month-wise/salary/report/process', [SalaryGenerateController::class, 'salaryReportProcess'])->name('month_wise_salary_report');
+    Route::get('salary/report/{slh_auto_id}/view', [SalaryGenerateController::class, 'salaryReportView'])->name('salary-report-view');
+    Route::get('salary/report/{slh_auto_id}/download', [SalaryGenerateController::class, 'salaryReportDownload'])->name('salary-report-download');
     Route::resource('salary', SalaryController::class);
     // --------------- Salary Details ------------------
 

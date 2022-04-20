@@ -76,6 +76,7 @@
                 <li class="@yield('salary')"><a href="#" class="waves-effect"><i class='bx bxs-wallet-alt'></i><span>Salary System</span></a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a class="@yield('salaryGenerate')" href="{{ route('salary-generate') }}"> <i class="fas fa-arrow-right sm child_i"></i> Salary Generat </a></li>
+                        <li><a class="@yield('salaryReport')" href="{{ route('salary-report') }}"> <i class="fas fa-arrow-right sm child_i"></i> Salary Report </a></li>
                     </ul>
                 </li>
 
